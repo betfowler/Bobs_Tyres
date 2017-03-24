@@ -6,10 +6,50 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/css?family=Kalam" rel="stylesheet">
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navtop">
+            <div class="row" id="navtopContainer">
+                <div class="col-md-5">
+                    <img src="../Content/Images/logo.jpg" />
+                </div>
+                <div class="col-md-7">
+                    <div class="row" id="contactInfomationGroup">
+                        <div class="col-md-4">
+                            <div class="row" id="contactBanner">
+                                <div class="col-md-12">
+                                    <div class="row" id="bannerTitle">
+                                        Give Us A Call On
+                                    </div>
+                                    <div class="row" id="contactNumber">
+                                        <i class="fa fa-phone" aria-hidden="true"></i> 01460 72037
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="locationBanner">
+                            Bobs Tyres Ltd,<br />
+                            Blacknell Lane Trading Estate,<br />
+                            Crewkerne, Somerset, TA18 7HE
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row" id="openingHrs">
+                                <div class="row" id="bannerTitle">
+                                    Our Opening Hours
+                                </div>
+                                <div class="row">
+                                    Monday - Friday <b>08.30</b> - <b>17.30</b>
+                                    Saturday <b>08.30 - 12.00</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,15 +57,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Services &#9662;
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("#", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("#", "Contact", "Home")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Online Tyres", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>

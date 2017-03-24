@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bobs_Tyres.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,13 @@ namespace Bobs_Tyres.Controllers
 {
     public class HomeController : Controller
     {
+
+        private Bobs_TyresContext db = new Bobs_TyresContext();
         public ActionResult Index()
         {
+            ViewBag.LatestNews = db.LatestNews.ToList();
+            ViewBag.LatestNewsCount = db.LatestNews.ToList().Count();
+            ViewBag.Reviews = db.Reviews.ToList();
             return View();
         }
 

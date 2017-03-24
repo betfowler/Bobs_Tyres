@@ -2,30 +2,170 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://unslider.com/unslider.min.js"></script>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="bannerImg">
+            <img size="(max-width: 1920px) 100vw, 1920px" src="~/Content/Images/LongBanner.png" />
+            <div class="bannertext">
+                <h1 id="googleText">Welcome to Bobs Tyres & Garage Services</h1>
+                <h3>With over 80 years combined experience our technicians can service, maintain and repair all makes of car and light commercial vehicle.</h3>
+                <h3>Whether you have a puncture, an annoying little rattle or need a full service including timing belt we have the facilities and qualified staff to help.</h3>
+                <h2 id="googleText">We're not just tyres!</h2>
+                <h4 class="familyText">A family, friendly service you can trust.</h4>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</div>
+
+<div class="row" id="break"></div>
+
+<div class="row">    
+    <div class="col-md-3">
+        <div class="col-md-12" id="boxTile">
+            <div class="row" id="boxTitle">
+                <div class="col-md-12"><h2>MOTs</h2></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="boxDesc">
+                    Here at Bobs we can take the stress out of getting your annual MOT test
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ActionLink("Read More", "Index", "Home", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    <div class="col-md-3">
+        <div class="col-md-12" id="boxTile">
+            <div class="row" id="boxTitle">
+                <div class="col-md-12"><h2>Repairs</h2></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="boxDesc">
+                    Our workshop is able to undertake all aspects of repairs to your vehicle
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ActionLink("Read More", "Index", "Home", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="col-md-12" id="boxTile">
+            <div class="row" id="boxTitle">
+                <div class="col-md-12"><h2>Servicing</h2></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="boxDesc">
+                    Our technicians can service your car, van or light commerical vehicle
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ActionLink("Read More", "Index", "Home", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="col-md-12" id="boxTile">
+            <div class="row" id="boxTitle">
+                <div class="col-md-12"><h2>Tyres</h2></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="boxDesc">
+                    We offer a quality tyre-fitting service with a quick turnaround and great value for money
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.ActionLink("Read More", "Index", "Home", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="break"></div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="col-md-12" id="secRow">
+            <div class="row">
+                <h2>Latest News</h2>
+            </div>
+            <div class="col-md-12" id="latestNews">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            @{
+                                var counter = 0;
+                            }
+                            @foreach (var item in ViewBag.LatestNews)
+                            {
+
+                                counter = counter + 1;
+                                var position = "news" + counter.ToString();
+
+                                <li class="news @position">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-1">
+                                                <div class="col-md-12">
+                                                    <a class="prev" onclick="plusSlides(-1, @ViewBag.LatestNewsCount, @counter)">&#10094</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row" id="newsTitle">
+                                                    @item.Title
+                                                </div>
+                                                <div class="row" id="newsImage">
+                                                    <img src="../Content/Images/@item.Image" />
+                                                </div>
+                                                <div class="row" id="newsDescription">
+                                                    @item.Description
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <a class="next" onclick="plusSlides(1, @ViewBag.LatestNewsCount, @counter)">&#10095</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12" id="secRow">
+            <div class="row">
+                <h2>Testimonials</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+
+                </div>
+                <div class="col-md-4">
+                    @Html.ActionLink("Write a review", "Index", "Home", new { @class = "btn btn-default" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                
+            </div>
+        </div>
     </div>
 </div>

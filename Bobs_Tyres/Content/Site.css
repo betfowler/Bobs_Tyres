@@ -5,6 +5,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    padding-top: 120px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -21,4 +22,140 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-nav > li:hover{
+    background-color: #165121;
+}
+
+#break{
+    height: 15px;
+}
+
+/*ABOVE NAVBAR*/
+
+.navtop{
+    background-color: white;
+    padding-bottom: 5px;
+}
+
+#navtopContainer{
+    max-width: 1170px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin: auto;
+}
+
+#contactBanner{
+    text-align: right;
+    padding-right: 15px;
+}
+
+#openingHrs{
+    margin-left: 15px;
+}
+
+#hours{
+    font-size: 12px;
+}
+
+#locationBanner{
+    font-size: 12px;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}
+#bannerTitle{
+    font-size: 13px;
+    font-weight: bold;
+    color: #165121;
+    
+}
+#contactNumber{
+    font-size: 26px;
+}
+
+#contactInfomationGroup{
+    padding-top: 20px;
+}
+
+/*INDEX PAGE BANNER*/
+.body-content
+.bannerImg {
+    width: 100%;
+}
+
+.bannerImg img {
+    display: block;
+    max-width: 100%;
+}
+
+.text {
+    border: 1px solid red;
+}
+
+.bannertext{
+    position: absolute;
+    top: 200px;
+    left: 7%;
+    width: 86%;
+    color: white;
+    text-align: center;
+}
+
+#googleText{
+    font-family: 'Kalam', cursive;
+}
+
+/*INDEX BOX TILES*/
+#boxTile{
+    background-color: #165121;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    margin-right: 5px;
+}
+
+#boxDesc{
+    height: 70px;
+}
+
+#secRow{
+    background-color: #efefef;
+    text-align: center;
+}
+
+/*LATEST NEWS BANNER*/
+.news{
+    display: none;
+    border: 1px solid #165121;
+    background-color: white;
+}
+.news1{
+    display: block;
+}
+
+.news ul{
+    padding: 0;
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: #165121;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
 }
