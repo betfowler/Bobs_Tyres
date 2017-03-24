@@ -227,8 +227,14 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\DamageWarranty.png" />
+    <Content Include="Content\Images\Facebook.png" />
     <Content Include="Content\Images\logo.jpg" />
     <Content Include="Content\Images\LongBanner.png" />
+    <Content Include="Content\Images\NewOnlineTyres.png" />
+    <Content Include="Content\Images\star-off.svg" />
+    <Content Include="Content\Images\star-on.svg" />
+    <Content Include="Content\Images\Tools.png" />
     <Content Include="Content\Images\WheelsonCartoonFace.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />

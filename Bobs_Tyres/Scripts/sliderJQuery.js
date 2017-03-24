@@ -14,3 +14,10 @@
     //show next slide
     $(".news" + slideIndex).css("display", "block")
 }
+
+function selectSlide(selected) {
+    //hide all
+    $(".news").css("display", "none");
+    slideIndex = parseInt(selected);
+    $(".news" + slideIndex).css("display", "block")
+}

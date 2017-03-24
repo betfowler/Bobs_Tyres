@@ -127,6 +127,7 @@ textarea {
 #secRow{
     background-color: #efefef;
     text-align: center;
+    padding-bottom: 20px;
 }
 
 /*LATEST NEWS BANNER*/
@@ -139,23 +140,127 @@ textarea {
     display: block;
 }
 
-.news ul{
+#latestNews ul{
     padding: 0;
 }
 
+#newsImage{
+    height: 250px;
+}
+
+#newsImage img{
+    height: 90%;
+    max-width: 90%;
+    vertical-align: bottom;
+}
+
+#newsDescription{
+    height: 60px;
+}
+
+#findoutmore{
+    padding-bottom: 10px;
+}
 .prev,
 .next {
     cursor: pointer;
     position: absolute;
-    top: 50%;
-    width: auto;
+    top: 40%;
     padding: 16px;
     margin-top: -50px;
     color: #165121;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 100px;
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
     user-select: none;
     -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+#latestNews input {
+    display: none;
+}
+
+.nav-dots{
+    width: 95%;
+    height: 11px;
+    display: block;
+    position: absolute;
+    text-align: center;
+}
+
+.nav-dots .nav-dot{
+    top: -5px;
+    width: 11px;
+    height: 11px;
+    margin: 0 4px;
+    position: relative;
+    border-radius: 100%;
+    display: inline-block;
+    background-color: rgba(0,0,0,0.6);
+}
+.nav-dots .nav-dot:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.8);
+}
+
+/*STAR RATING*/
+.starRating:not(old){
+  display        : inline-block;
+  width          : 7.5em;
+  height         : 1.5em;
+  overflow       : hidden;
+  vertical-align : bottom;
+}
+
+
+.starRating:not(old) > input{
+  margin-right : -100%;
+  opacity      : 0;
+}
+
+
+.starRating:not(old) > label{
+  display         : block;
+  float           : right;
+  position        : relative;
+  background      : url('../Content/Images/star-off.svg');
+  background-size : contain;
+}
+
+
+.starRating:not(old) > label:before{
+  content         : '';
+  display         : block;
+  width           : 1.5em;
+  height          : 1.5em;
+  background      : url('../Content/Images/star-on.svg');
+  background-size : contain;
+  opacity         : 0;
+  transition      : opacity 0.2s linear;
+}
+
+
+.starRating:not(old) > label:hover:before,
+
+.starRating:not(old) > label:hover ~ label:before,
+
+.starRating:not(:hover) > :checked ~ label:before{
+  opacity : 1;
 }
