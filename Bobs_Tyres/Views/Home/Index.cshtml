@@ -22,7 +22,7 @@
 
 <div class="row" id="break"></div>
 
-<div class="row">    
+<div class="row">
     <div class="col-md-3">
         <div class="col-md-12" id="boxTile">
             <div class="row" id="boxTitle">
@@ -117,30 +117,30 @@
                                 var position = "news" + counter.ToString();
                                 var radiobutton = "img-" + counter.ToString();
 
-                                <input type="radio" name="radio-btn" id="@radiobutton" />
-                                <li class="news @position">
-                                    <div class="row">
-                                        <div class="col-md-12" id="slideContent">
-                                            <div class="row" id="newsTitle">
-                                                <h2><b>@item.Title</b></h2>
-                                            </div>
-                                            <div class="row" id="newsImage">
-                                                <img src="../Content/Images/@item.Image" />
-                                            </div>
-                                            <div class="row" id="newsDescription">
-                                                <div class="col-md-12">
-                                                    <h4>@item.Description</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row" id="findoutmore">
-                                                @Html.ActionLink("Find Out More", "Index", "Home", new { @class = "btn btn-default" })
-                                            </div>
-
-                                            <a class="prev" onclick="plusSlides(-1, @ViewBag.LatestNewsCount, @counter)">&#10094</a>
-                                            <a class="next" onclick="plusSlides(1, @ViewBag.LatestNewsCount, @counter)">&#10095</a>
+                            <input type="radio" name="radio-btn" id="@radiobutton" />
+                            <li class="news @position">
+                                <div class="row">
+                                    <div class="col-md-12" id="slideContent">
+                                        <div class="row" id="newsTitle">
+                                            <h2><b>@item.Title</b></h2>
                                         </div>
+                                        <div class="row" id="newsImage">
+                                            <img src="../Content/Images/@item.Image" />
+                                        </div>
+                                        <div class="row" id="newsDescription">
+                                            <div class="col-md-12">
+                                                <h4>@item.Description</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="findoutmore">
+                                            @Html.ActionLink("Find Out More", "Index", "Home", new { @class = "btn btn-default" })
+                                        </div>
+
+                                        <a class="prev" onclick="plusSlides(-1, @ViewBag.LatestNewsCount, @counter)">&#10094</a>
+                                        <a class="next" onclick="plusSlides(1, @ViewBag.LatestNewsCount, @counter)">&#10095</a>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
                             }
                         </ul>
                     </div>
@@ -156,7 +156,7 @@
                         {
                             counter = counter + 1;
                             var navdot = "img-dot" + counter.ToString();
-                            <label class="nav-dot" id="@navdot" onclick="selectSlide(@counter)"></label>
+                        <label class="nav-dot" id="@navdot" onclick="selectSlide(@counter)"></label>
                         }
                     </div>
                 </div>
@@ -173,39 +173,73 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-3">
-                            <h3>5.0</h3>
+                            <h2 style="text-align: right" id="reviewaverage">@ViewBag.ReviewAverage</h2>
                         </div>
                         <div class="col-md-9">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <span class="starRating">
-                                        <input id="rating5" type="radio" name="rating" value="5" />
-                                        <label for="rating5">5</label>
-                                        <input id="rating4" type="radio" name="rating" value="4" />
-                                        <label for="rating4">4</label>
-                                        <input id="rating3" type="radio" name="rating" value="3" />
-                                        <label for="rating3">3</label>
-                                        <input id="rating2" type="radio" name="rating" value="2" />
-                                        <label for="rating2">2</label>
-                                        <input id="rating1" type="radio" name="rating" value="1" />
-                                        <label for="rating1">1</label>
-                                    </span>
+                                    <div class="totalRating">
+                                        <span id="star1">&#9734</span>
+                                        <span id="star2">&#9734</span>
+                                        <span id="star3">&#9734</span>
+                                        <span id="star4">&#9734</span>
+                                        <span id="star5">&#9734</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    11 Reviews
+                                    <span id="numReviews">@ViewBag.NumReview Reviews</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    @Html.ActionLink("Write a review", "Index", "Home", new { @class = "btn btn-default" })
+                    @Html.ActionLink("Write a review", "Create", "Reviews", null, new { @class = "btn btn-default", id="reviewbutton" })
                 </div>
             </div>
             <div class="col-md-12">
-                
+                <div class="testimonialList">
+                    @foreach (var item in ViewBag.Reviews)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                @item.Name
+                                <span id="greyedText">@item.Date</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="userRating">
+
+                                    @for (var i = 1; i <= @item.Rating; i++)
+                                    {
+                                        var starid = "star" + i.ToString();
+                                        <span id="@starid">&#9733</span>
+                                    }
+                                    @for (var i = @item.Rating; i < 5; i++)
+                                    {
+                                        var starid = "star" + i.ToString();
+                                        <span id="@starid">&#9734</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @item.Testimonial
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="greyedText">@item.Location</span>
+                            </div>
+                        </div>
+
+                        <hr />
+                    }
+                </div>
             </div>
         </div>
     </div>

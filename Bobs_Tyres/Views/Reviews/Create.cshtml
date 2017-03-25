@@ -4,15 +4,15 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Add Your Testimonial</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Review</h4>
+        <h4>Let us know how we did</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -24,17 +24,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="star">
+                    <span id="star1" onclick="selectStar(1)" onmouseover="starHover(1)" onmouseout="starOut(1)" value="1">&#9734</span>
+                    <span id="star2" onclick="selectStar(2)" onmouseover="starHover(2)" onmouseout="starOut(2)">&#9734</span>
+                    <span id="star3" onclick="selectStar(3)" onmouseover="starHover(3)" onmouseout="starOut(3)">&#9734</span>
+                    <span id="star4" onclick="selectStar(4)" onmouseover="starHover(4)" onmouseout="starOut(4)">&#9734</span>
+                    <span id="star5" onclick="selectStar(5)" onmouseover="starHover(5)" onmouseout="starOut(5)">&#9734</span>
+                </div>
+                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { id = "rating"} })
                 @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
             </div>
         </div>

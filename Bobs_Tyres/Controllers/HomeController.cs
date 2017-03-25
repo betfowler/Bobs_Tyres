@@ -16,6 +16,15 @@ namespace Bobs_Tyres.Controllers
             ViewBag.LatestNews = db.LatestNews.ToList();
             ViewBag.LatestNewsCount = db.LatestNews.ToList().Count();
             ViewBag.Reviews = db.Reviews.ToList();
+            var numReviews = 0;
+            var totalReview = 0;
+            foreach(var review in db.Reviews.ToList())
+            {
+                numReviews = numReviews + 1;
+                totalReview = totalReview + review.Rating;
+            }
+            ViewBag.ReviewAverage = Math.Ceiling((double)totalReview / numReviews);
+            ViewBag.NumReview = numReviews;
             return View();
         }
 

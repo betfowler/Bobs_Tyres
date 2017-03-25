@@ -128,6 +128,7 @@ textarea {
     background-color: #efefef;
     text-align: center;
     padding-bottom: 20px;
+    height: 513px;
 }
 
 /*LATEST NEWS BANNER*/
@@ -221,46 +222,53 @@ textarea {
 }
 
 /*STAR RATING*/
-.starRating:not(old){
-  display        : inline-block;
-  width          : 7.5em;
-  height         : 1.5em;
-  overflow       : hidden;
-  vertical-align : bottom;
+
+.star{
+    font-size: 30px;
+    color: #165121;
 }
 
-
-.starRating:not(old) > input{
-  margin-right : -100%;
-  opacity      : 0;
+#rating{
+    display: none;
 }
 
-
-.starRating:not(old) > label{
-  display         : block;
-  float           : right;
-  position        : relative;
-  background      : url('../Content/Images/star-off.svg');
-  background-size : contain;
+/*Testimonials*/
+.testimonialList{
+    border: 1px solid grey;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-align: left;
+    padding: 10px;
+    background-color: white;
+    height: 340px;
 }
 
-
-.starRating:not(old) > label:before{
-  content         : '';
-  display         : block;
-  width           : 1.5em;
-  height          : 1.5em;
-  background      : url('../Content/Images/star-on.svg');
-  background-size : contain;
-  opacity         : 0;
-  transition      : opacity 0.2s linear;
+.totalRating{
+    text-align: left;
+    font-size: 40px;
+    color: #165121;
+    vertical-align: text-bottom;
 }
 
+#reviewbutton{
+    margin-top: 15px;
+}
 
-.starRating:not(old) > label:hover:before,
+#numReviews{
+    text-align: left;
+    vertical-align: text-top;
+}
 
-.starRating:not(old) > label:hover ~ label:before,
+#greyedText{
+    color: grey;
+}
 
-.starRating:not(:hover) > :checked ~ label:before{
-  opacity : 1;
+.userRating{
+    text-align: left;
+    font-size: 20px;
+    color: #165121;
+}
+
+#total{
+    display: none;
 }

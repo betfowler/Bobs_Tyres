@@ -233,6 +233,7 @@
     <Content Include="Content\Images\LongBanner.png" />
     <Content Include="Content\Images\NewOnlineTyres.png" />
     <Content Include="Content\Images\star-off.svg" />
+    <Content Include="Content\Images\star-on.png" />
     <Content Include="Content\Images\star-on.svg" />
     <Content Include="Content\Images\Tools.png" />
     <Content Include="Content\Images\WheelsonCartoonFace.png" />
@@ -241,6 +242,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bobsjQuery.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
