@@ -14,7 +14,7 @@
         <div class="navtop">
             <div class="row" id="navtopContainer">
                 <div class="col-md-5">
-                    <img src="../Content/Images/logo.jpg" />
+                    <a href="@Url.Action("Index", "Home")"><img src="../Content/Images/logo.jpg" /></a>
                 </div>
                 <div class="col-md-7">
                     <div class="row" id="contactInfomationGroup">
@@ -66,8 +66,14 @@
                             Services &#9662;
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("#", "Contact", "Home")</li>
-                            <li>@Html.ActionLink("#", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Servicing", "Servicing", "Services")</li>
+                            <li>@Html.ActionLink("Batteries", "Batteries", "Services")</li>
+                            <li>@Html.ActionLink("Repairs", "Repairs", "Services")</li>
+                            <li>@Html.ActionLink("MOT's", "MOTs", "Services")</li>
+                            <li>@Html.ActionLink("Tyres", "Tyres", "Services")</li>
+                            <li>@Html.ActionLink("Kumho Tyres", "Kumho_Tyres", "Services")</li>
+                            <li>@Html.ActionLink("Exhausts", "Exhausts", "Services")</li>
+                            <li>@Html.ActionLink("Tow Bars", "Tow_Bars", "Services")</li>
                         </ul>
                     </li>
                     <li>@Html.ActionLink("Online Tyres", "Contact", "Home")</li>

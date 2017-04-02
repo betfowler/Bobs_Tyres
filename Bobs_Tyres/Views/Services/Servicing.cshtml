@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Servicing";
+    Layout = "~/Views/Shared/_InfoLayout.cshtml";
+}
+
+@section pageTitle{
+    Servicing Advice
+}
+
+@section pageBody{
+    <p>Our technicians can service your car, van or light commercial vehicle using our own bespoke service schedule or your vehicle manufactures specifc service schedule.</p>
+    <p>Servicing generally takes place in three or four different forms, oil and filter change, interim service, a full or major service or manufactures specific service.  The single most important thing that a person can do to prolong the life and performance of their car is to have an oil and filter change once a year or every six to twelve thousand miles.</p>
+    <p>By changing the oil you reduce the chance of wear on engine components.  The oil filter needs to be changed at the same time because oil carries dirt and particles that clog up the filter which will ultimately reduce the life of the engine and its efficiency.</p>
+    <p>The more intense the service the more parts and components will be checked, to some extent all levels of servicing will help the following:</p>
+    <ul>
+        <li>Saving you money - preventing untimely breakdowns</li>
+        <li>Increasing your MPG (i.e. make your fuel last longer)</li>
+        <li>Increase your all round general vehicle safety</li>
+        <li>Keeping within legal requirements</li>
+    </ul>
+    <p>We recommend having our major service once a year or every 12,000 miles to fully ensure that your vehicle is running to its optimum efficiency.  This will help stop unexpected breakdowns and allow you to better plan for your vehicle maintenance through the year.</p>
+
+    <div class="pdflinks" style="text-align: center">
+        <a href="@Url.Content("~/Content/Files/Service-Schedule.pdf")" class="btn btn-default">View Our Service Schedule</a>
+        &nbsp;
+        <a href="@Url.Content("~/Content/Files/Service-Price-List.pdf")" class="btn btn-default">View Our Service Price List</a>
+    </div>
+}
+
+@section bannerTop{
+    If you would like any further advice on servicing please contact us
+}
+@section bannerBottom{
+    Our friendly staff will be more than happy to assess your servicing requirements and guide you in the right direction
+}
+@section bannerImage{
+    <img src="~/Content/Images/Tools.png" />
+}

@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-7" id="pageInfo">
+        <h1>@RenderSection("pageTitle", false)</h1>
+        <h4>@RenderSection("pageBody", false)</h4>
+    </div>
+    <div class="col-md-5" id="infoLongBanner">
+        <img src="../Content/Images/TallBanner.png"/>
+        <div class="infoBannerContent">
+            <h3>@RenderSection("bannerTop", false)</h3>
+            <h2>01460 72037</h2>
+            <h5>bobstyres@bobstyresltd.co.uk</h5>
+            <h3>@RenderSection("bannerBottom", false)</h3>
+            <div class="infoBannerImg">
+                @RenderSection("bannerImage", false)
+            </div>
+        </div>
+    </div>
+</div>
+

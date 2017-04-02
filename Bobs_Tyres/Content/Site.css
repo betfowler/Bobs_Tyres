@@ -93,10 +93,6 @@ textarea {
     max-width: 100%;
 }
 
-.text {
-    border: 1px solid red;
-}
-
 .bannertext{
     position: absolute;
     top: 200px;
@@ -281,7 +277,7 @@ textarea {
   text-align:center;
   color:#333;
   background:#fff;
-  /* css3 */
+  /* css3 */ 
   -webkit-border-radius:20px;
   -moz-border-radius:20px;
   border-radius:20px;
@@ -329,9 +325,40 @@ textarea {
   display:block;
 }
 
-#thirdRow img{
-    max-height: 200px;
-    max-width: 90%;
+#wheelsonFace img{
+    max-width: 70%;
     float: right;
     padding-top: 15px;
+}
+
+#googleMap{
+    border: 5px solid #165121;
+}
+#infoLongBanner img{
+    max-width: 70%;
+    display: block;
+}
+
+#pageInfo h1{
+    text-align: center;
+    color: #165121;
+    margin-bottom: 30px;
+}
+#pageInfo p,
+#pageInfo ul{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.infoBannerContent{
+    position: absolute;
+    top: 200px;
+    left: 6%;
+    width: 60%;
+    color: white;
+    text-align: center;
+}
+
+#infoBannerImg img{
+    max-height: 80px;
 }

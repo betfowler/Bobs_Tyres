@@ -54,3 +54,16 @@ function selectStar(n) {
     }
     $("#rating").attr("value", n);
 }
+
+function initMap() {
+    var myLatLng = { lat: 50.881291, lng: -2.789033 };
+    var map = new google.maps.Map(document.getElementById('googleMap'), {
+        zoom: 18,
+        center: myLatLng
+    });
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: "We're here!"
+    });
+}

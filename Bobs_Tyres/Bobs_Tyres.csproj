@@ -200,6 +200,7 @@
     <Compile Include="Controllers\LatestNewsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,8 +236,10 @@
     <Content Include="Content\Images\star-off.svg" />
     <Content Include="Content\Images\star-on.png" />
     <Content Include="Content\Images\star-on.svg" />
+    <Content Include="Content\Images\TallBanner.png" />
     <Content Include="Content\Images\Tools.png" />
     <Content Include="Content\Images\WheelsonCartoonFace.png" />
+    <Content Include="Content\Images\WheelsonLong.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -253,6 +256,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Content\Files\Service-Schedule.pdf" />
+    <Content Include="Content\Files\Service-Price-List.pdf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -310,6 +315,15 @@
     <Content Include="Views\LatestNews\Details.cshtml" />
     <Content Include="Views\LatestNews\Edit.cshtml" />
     <Content Include="Views\LatestNews\Index.cshtml" />
+    <Content Include="Views\Services\Servicing.cshtml" />
+    <Content Include="Views\Shared\_InfoLayout.cshtml" />
+    <Content Include="Views\Services\Batteries.cshtml" />
+    <Content Include="Views\Services\Repairs.cshtml" />
+    <Content Include="Views\Services\MOTs.cshtml" />
+    <Content Include="Views\Services\Tyres.cshtml" />
+    <Content Include="Views\Services\Kumho_Tyres.cshtml" />
+    <Content Include="Views\Services\Exhausts.cshtml" />
+    <Content Include="Views\Services\Tow_Bars.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
