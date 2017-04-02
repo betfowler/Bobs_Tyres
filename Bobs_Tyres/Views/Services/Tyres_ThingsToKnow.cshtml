@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Tyres_ThingsToKnow";
+}
+
+<ul class="nav nav-tabs">
+    <li><a href="@Url.Action("Tyres", "Services")">Back To Tyres</a></li>
+    <li class="active"><a data-toggle="tab" href="#toKnow">Things <b>You</b> Should Know</a></li>
+    <li><a data-toggle="tab" href="#weNeed">Information <b>We</b> Need To Know</a></li>
+    <li><a href="@Url.Action("Kumho_Tyres", "Services")">Kumho Tyres</a></li>
+</ul>
+
+<div class="tab-content" id="pageInfo">
+    <div id="toKnow" class="tab-pane fade in active">
+        <h1>Tyres: Things You Should Know</h1>
+        <div class="col-md-5">
+            <div class="tyresBanner">
+                <img src="~/Content/Images/SmlBanner.png" />
+                <div class="infoBannerContent">
+                    <h3>Call in and we will check your tread depth, tyre pressure and tyre condition for <b>FREE</b>!</h3>
+                    <h2>01460 72037</h2>
+                    <h4>bobstyres@bobstyresltd.co.uk</h4>
+                    <h3>Do you have any questions about your tyres?</h3>
+                    @Html.ActionLink("Contact Us Here", "Contact", "Home", null, new { @class = "btn btn-home" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h2>Tread Depth</h2>
+            <h4>
+                <p>The legal limit is 1.6mm of tread depth across the central ¾ of the tyre all the way round. Anything less than this seriously compromises your safety and can earn you a fine of up to £2,500 and 3 points on your Driving Licence, per tyre.</p>
+                <p>All major manufacturers put tread wear indicators into the grooves of their tyres, so that when they are flush with the main surface of the tyre, you know it’s time to change your tyres.</p>
+                <p>Call in and we will check this for <b>free</b> at any time there’s no need to book. We will only advise you to change your tyre when you actually need to and if you have life left in your tyres we can give you advice of how much.</p>
+            </h4>
+            <br />
+            <h2>Tyre Pressure</h2>
+            <h4>
+                <p>You should check your tyre pressures every two weeks and before any long trip, to ensure they meet the manufacturer’s recommendations.</p>
+                <p>Tyre pressures should be checked cold (tyres not having run for at least 2 hours, or having run for less than 2 miles at low speed). The correct tyre pressure can be found in the vehicle’s handbook and sometimes on a sticker on the door jam or fuel cap.</p>
+                <p>Call in and we will check and adjust your tyre pressures to the manufacturer’s recommendations <b>free</b>.</p>
+            </h4>
+            <br />
+            <h2>Tyre Condition</h2>
+            <h4>
+                <p>Visually inspect your tyres for cuts, cracks and bulges, as these can lead to slow punctures or blowouts.</p>
+                <p>Call in and we will check the tyre condition for you <b>free</b>.</p>
+            </h4>
+        </div>
+    </div>
+    <div id="weNeed" class="tab-pane fade">
+        <h1>Tyre Information We Need To Know</h1>
+        <div class="col-md-5">
+            <div class="tyresBanner">
+                <img src="~/Content/Images/SmlBanner.png" />
+                <div class="infoBannerContent">
+                    <h3>Call in and we will check your tread depth, tyre pressure and tyre condition for <b>FREE</b>!</h3>
+                    <h2>01460 72037</h2>
+                    <h4>bobstyres@bobstyresltd.co.uk</h4>
+                    <h3>Do you have any questions about your tyres?</h3>
+                    @Html.ActionLink("Contact Us Here", "Contact", "Home", null, new { @class = "btn btn-home" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" id="weNeedImage">
+            <img src="~/Content/Images/TyreInformation.png" />
+            <h4>
+                <p>To enable us to process your enquiry there is certain information we need from your tyres. Some of the information we need is shown in the picture above. Along with this it is also beneficial to us to have the tyre make and model.</p>
+                <p>With this information we can give you an accurate quote and avoid any disappointment later.</p>
+            </h4>
+        </div>
+    </div>
+</div>

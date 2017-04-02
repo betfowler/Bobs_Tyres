@@ -334,7 +334,8 @@ textarea {
 #googleMap{
     border: 5px solid #165121;
 }
-#infoLongBanner img{
+#infoLongBanner img,
+.tyresBanner img {
     max-width: 70%;
     display: block;
 }
@@ -359,6 +360,39 @@ textarea {
     text-align: center;
 }
 
-#infoBannerImg img{
+.infoBannerImg img{
     max-height: 80px;
+}
+
+.btn-home {
+  color: #ffffff;
+  background-color: #165121;
+  border-color: #165121;
+  font-size: 20px;
+}
+.btn-home:hover,
+.btn-primary:hover {
+  color: #165121;
+  background-color: #ffffff;
+  border-color: #165121;
+}
+
+.btn-primary{
+  color: #ffffff;
+  background-color: #165121;
+  border-color: #165121;
+}
+
+.pdflinks a{
+    margin: 20px;
+}
+
+#weNeedImage img{
+    width: 100%;
+    margin: auto;
+
+}
+
+ol > li{
+    margin: 15px;
 }

@@ -12,8 +12,10 @@
         <div class="infoBannerContent">
             <h3>@RenderSection("bannerTop", false)</h3>
             <h2>01460 72037</h2>
-            <h5>bobstyres@bobstyresltd.co.uk</h5>
+            <h4>bobstyres@bobstyresltd.co.uk</h4>
             <h3>@RenderSection("bannerBottom", false)</h3>
+            <br />
+            @Html.ActionLink("Contact Us Here","Contact","Home", null, new { @class = "btn btn-home"})
             <div class="infoBannerImg">
                 @RenderSection("bannerImage", false)
             </div>

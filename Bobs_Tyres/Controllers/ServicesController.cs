@@ -41,5 +41,13 @@ namespace Bobs_Tyres.Controllers
         {
             return View();
         }
+        public ActionResult Tyres_ThingsToKnow()
+        {
+            return View();
+        }
+        public ActionResult Kumho_Tyres_Facts()
+        {
+            return View();
+        }
     }
 }
