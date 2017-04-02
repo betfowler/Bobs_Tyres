@@ -17,6 +17,7 @@
     <p>Although kumho tyres have been around for quite some time now, the company is only just receiving the recognition it deserves.</p>
     <div class="pdflinks" style="text-align: center">
         <a href="@Url.Action("Kumho_Tyres_Facts", "Services")"><img src="~/Content/Images/Kumho-Logo-2016-1.png" /></a>
+        @Html.ActionLink("Accidental Damage Warranty", "Kumho_Warranty", "Services", null, new { @class = "btn btn-primary" })
         @Html.ActionLink("Nine Facts About Kumho Tyres", "Kumho_Tyres_Facts", "Services", null, new { @class="btn btn-primary"})
     </div>
 }

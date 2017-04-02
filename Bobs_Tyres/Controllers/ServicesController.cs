@@ -49,5 +49,9 @@ namespace Bobs_Tyres.Controllers
         {
             return View();
         }
+        public ActionResult Kumho_Warranty()
+        {
+            return View();
+        }
     }
 }

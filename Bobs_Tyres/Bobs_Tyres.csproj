@@ -228,12 +228,20 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\8f50876fde603cb6bd9cd97562b2452b_f618.png" />
+    <Content Include="Content\Images\bosal_logo.jpg" />
+    <Content Include="Content\Images\carservicingchester.seesites.biz_--_882320879.jpg" />
+    <Content Include="Content\Images\continental_logo_yellow_srgb_png-data_1391442108.jpg" />
     <Content Include="Content\Images\DamageWarranty.png" />
     <Content Include="Content\Images\Facebook.png" />
+    <Content Include="Content\Images\falken-tires-1.jpg" />
+    <Content Include="Content\Images\goodyear.png" />
     <Content Include="Content\Images\Kumho-Logo-2016-1.png" />
     <Content Include="Content\Images\logo.jpg" />
     <Content Include="Content\Images\LongBanner.png" />
+    <Content Include="Content\Images\Michelin.svg.png" />
     <Content Include="Content\Images\NewOnlineTyres.png" />
+    <Content Include="Content\Images\pirelli.png" />
     <Content Include="Content\Images\SmlBanner.png" />
     <Content Include="Content\Images\star-off.svg" />
     <Content Include="Content\Images\star-on.png" />
@@ -330,6 +338,7 @@
     <Content Include="Views\Services\Tow_Bars.cshtml" />
     <Content Include="Views\Services\Tyres_ThingsToKnow.cshtml" />
     <Content Include="Views\Services\Kumho_Tyres_Facts.cshtml" />
+    <Content Include="Views\Services\Kumho_Warranty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -58,7 +58,7 @@ function selectStar(n) {
 function initMap() {
     var myLatLng = { lat: 50.881291, lng: -2.789033 };
     var map = new google.maps.Map(document.getElementById('googleMap'), {
-        zoom: 18,
+        zoom: 17,
         center: myLatLng
     });
     var marker = new google.maps.Marker({
