@@ -1,17 +1,105 @@
-﻿@{
+﻿@model Bobs_Tyres.Models.Contact
+@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h1 style="text-align: center; color: #165121; padding-bottom: 20px;">Contact Us</h1>
+<div class="row">
+    <div class="col-md-4" id="contactInformation">
+        <img src="~/Content/Images/SmlBanner.png" />
+        <div class="infoBannerContentHigher">
+            <i class="fa fa-map-marker" style="font-size: 40px; margin-bottom: 30px;" aria-hidden="true"></i>
+            <h4>
+                <p>Bobs Tyres Ltd</p>
+                <p>Blacknell Lane Trading Estate</p>
+                <p>Crewkerne</p>
+                <p>Somerset</p>
+                <p>TA18 7HE</p>
+            </h4>
+        </div>
+    </div>
+    <div class="col-md-4" id="contactInformation">
+        <img src="~/Content/Images/SmlBanner.png" />
+        <div class="infoBannerContentHigher">
+            <i class="fa fa-calendar" style="font-size: 40px; margin-bottom: 30px;" aria-hidden="true"></i>
+            <h3>Monday - Friday</h3>
+            <h3>08.30 - 17.30</h3>
+            <h3>Saturday</h3>
+            <h3>08.30 - 12.00</h3>
+        </div>
+    </div>
+    <div class="col-md-4" id="contactInformation">
+        <img src="~/Content/Images/SmlBanner.png" />
+        <div class="infoBannerContentHigher">
+            <i class="fa fa-phone" style="font-size: 40px; margin-bottom: 30px;" aria-hidden="true"></i>
+            <h2>01460 72037</h2>
+            <br />
+            <h5><i class="fa fa-envelope" aria-hidden="true"></i> bobstyres@bobstyresltd.co.uk</h5>
+            <i class="fa fa-facebook-square" style="font-size: 40px; margin: 30px;" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>
+<div class="row" id="break"></div>
+<div class="row" id="break"></div>
+<div class="row">
+    <div class="col-md-7">
+        <h4>Complete the form below to submit an email enquiry</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+        <div class="contactform">
+            <div class="form-horizontal">
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.customerName, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.customerName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.customerName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.emailAddress, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.emailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.emailAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.contactNumber, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.contactNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.contactNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.message, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.message, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="6LfXoRgUAAAAAEFHvieZAPLqY74vzREiI0vVzbxB"></div>
+                    <div>
+                        @if (TempData["recaptcha"] != null)
+                        {
+                            <p style="color: red"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> @TempData["recaptcha"]</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    <div class="col-md-5">
+        <div id="googleMap" style="width: 100%; height: 300px"></div>
+    </div>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIpBqhrLDizCmUyYyy6-Z482uNyU66oxc&callback=initMap"></script>

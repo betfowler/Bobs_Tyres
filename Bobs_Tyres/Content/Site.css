@@ -335,9 +335,13 @@ textarea {
     border: 5px solid #165121;
 }
 #infoLongBanner img,
-.tyresBanner img {
+.tyresBanner img,
+#contactInformation img {
     max-width: 70%;
     display: block;
+}
+#contactInformation img{
+    margin: auto;
 }
 
 #pageInfo h1{
@@ -351,13 +355,19 @@ textarea {
     margin-bottom: 20px;
 }
 
-.infoBannerContent{
+.infoBannerContent,
+.infoBannerContentHigher{
     position: absolute;
     top: 200px;
     left: 6%;
     width: 60%;
     color: white;
     text-align: center;
+}
+
+.infoBannerContentHigher{
+    top: 175px;
+    left: 80px;
 }
 
 .infoBannerImg img{
@@ -411,4 +421,8 @@ ol > li{
 .tyres img{
     height: 100%;
     padding-left: 5px;
+}
+
+.contactTitle{
+    font-size: 20px;
 }
