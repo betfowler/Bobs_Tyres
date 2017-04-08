@@ -22,5 +22,8 @@ namespace Bobs_Tyres.Models
         public System.Data.Entity.DbSet<Bobs_Tyres.Models.Review> Reviews { get; set; }
 
         public System.Data.Entity.DbSet<Bobs_Tyres.Models.LatestNews> LatestNews { get; set; }
+
+        public System.Data.Entity.DbSet<Bobs_Tyres.Models.Account> Accounts { get; set; }
+        public System.Data.Entity.DbSet<Bobs_Tyres.Models.ReviewStatus> ReviewStatus { get; set; }
     }
 }

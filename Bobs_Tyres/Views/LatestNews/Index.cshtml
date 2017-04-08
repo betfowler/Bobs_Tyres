@@ -1,12 +1,16 @@
 ﻿@model IEnumerable<Bobs_Tyres.Models.LatestNews>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Latest News";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+@section pageTitle{
+    Latest News
+}
 
-<p>
+@section pageContent{
+    <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -23,23 +27,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LatestNewsID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LatestNewsID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LatestNewsID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.LatestNewsID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.LatestNewsID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.LatestNewsID })
+            </td>
+        </tr>
+    }
 
 </table>
+    
+}

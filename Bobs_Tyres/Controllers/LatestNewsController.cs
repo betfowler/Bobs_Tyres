@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bobs_Tyres.Models;
+using Bobs_Tyres.Security;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -17,28 +18,40 @@ namespace Bobs_Tyres.Controllers
         // GET: LatestNews
         public ActionResult Index()
         {
-            return View(db.LatestNews.ToList());
+            if (SessionPersister.Username != null)
+            {
+                return View(db.LatestNews.ToList());
+            }
+            return RedirectToAction("Index", "Home");            
         }
 
         // GET: LatestNews/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (SessionPersister.Username != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LatestNews latestNews = db.LatestNews.Find(id);
+                if (latestNews == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(latestNews);
             }
-            LatestNews latestNews = db.LatestNews.Find(id);
-            if (latestNews == null)
-            {
-                return HttpNotFound();
-            }
-            return View(latestNews);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: LatestNews/Create
         public ActionResult Create()
         {
-            return View();
+            if (SessionPersister.Username != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LatestNews/Create
@@ -61,16 +74,20 @@ namespace Bobs_Tyres.Controllers
         // GET: LatestNews/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (SessionPersister.Username != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LatestNews latestNews = db.LatestNews.Find(id);
+                if (latestNews == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(latestNews);
             }
-            LatestNews latestNews = db.LatestNews.Find(id);
-            if (latestNews == null)
-            {
-                return HttpNotFound();
-            }
-            return View(latestNews);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LatestNews/Edit/5
@@ -92,16 +109,20 @@ namespace Bobs_Tyres.Controllers
         // GET: LatestNews/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (SessionPersister.Username != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LatestNews latestNews = db.LatestNews.Find(id);
+                if (latestNews == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(latestNews);
             }
-            LatestNews latestNews = db.LatestNews.Find(id);
-            if (latestNews == null)
-            {
-                return HttpNotFound();
-            }
-            return View(latestNews);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: LatestNews/Delete/5

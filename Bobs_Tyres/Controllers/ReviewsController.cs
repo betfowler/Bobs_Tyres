@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Bobs_Tyres.Models;
+using Bobs_Tyres.Security;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -17,22 +18,17 @@ namespace Bobs_Tyres.Controllers
         // GET: Reviews
         public ActionResult Index()
         {
-            return View(db.Reviews.ToList());
+            var reviews = db.Reviews.Where(r => r.StatusID.Equals(2)).ToList();
+            return View(reviews.OrderByDescending(r => r.Date).ToList());
         }
 
-        // GET: Reviews/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult AdminIndex()
         {
-            if (id == null)
+            if (SessionPersister.Username != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(db.Reviews.OrderBy(r => r.StatusID).ToList());
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return HttpNotFound();
-            }
-            return View(review);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Reviews/Create
@@ -46,10 +42,12 @@ namespace Bobs_Tyres.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReviewID,Name,Date,Rating,Testimonial,Location")] Review review)
+        public ActionResult Create([Bind(Include = "ReviewID,Name,Date,Rating,Testimonial,Location,StatusID")] Review review)
         {
             if (ModelState.IsValid)
             {
+                review.StatusID = 1;
+                review.Date = DateTime.Now;
                 db.Reviews.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,16 +59,20 @@ namespace Bobs_Tyres.Controllers
         // GET: Reviews/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (SessionPersister.Username != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Review review = db.Reviews.Find(id);
+                if (review == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(review);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return HttpNotFound();
-            }
-            return View(review);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Reviews/Edit/5
@@ -92,16 +94,20 @@ namespace Bobs_Tyres.Controllers
         // GET: Reviews/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (SessionPersister.Username != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Review review = db.Reviews.Find(id);
+                if (review == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(review);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return HttpNotFound();
-            }
-            return View(review);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Reviews/Delete/5

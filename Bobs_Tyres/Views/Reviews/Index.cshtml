@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Bobs_Tyres.Models.Review>
+@using Bobs_Tyres.Security;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Testimonials";
 }
 
-<h2>Index</h2>
+<h2>Testimonals</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add Your Own Testimonial", "Create")
 </p>
 <table class="table">
     <tr>
@@ -26,10 +27,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Location)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -46,12 +47,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.Location)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReviewID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReviewID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReviewID })
-        </td>
     </tr>
 }
-
 </table>

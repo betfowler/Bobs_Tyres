@@ -1,0 +1,44 @@
+﻿@model Bobs_Tyres.ViewModels.AccountViewModel
+
+@{
+    ViewBag.Title = "Index";
+
+    if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong> @ViewBag.Error
+        </div>
+    }
+}
+
+<h2>Please Login</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Accounts", FormMethod.Post))
+            {
+                @ViewBag.Error
+                <h4>Log in here</h4>
+                <hr />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Account.Username, new { @class = "col-md-2 control-label"})
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Account.Username)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Account.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Account.Password)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Login" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>

@@ -426,3 +426,13 @@ ol > li{
 .contactTitle{
     font-size: 20px;
 }
+
+#managePageIcons img{
+    width: 90%;
+    margin: auto;
+}
+#managePageIconText h3{
+    width: 90%;
+    text-align: center;
+    color: gray;
+}

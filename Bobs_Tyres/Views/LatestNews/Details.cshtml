@@ -1,13 +1,16 @@
 ﻿@model Bobs_Tyres.Models.LatestNews
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Details: Latest News";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
+@section pageTitle{
+    Latest News - Details: @Model.Title
+}
 
+@section pageContent{
 <div>
-    <h4>LatestNews</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -40,3 +43,5 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.LatestNewsID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+}

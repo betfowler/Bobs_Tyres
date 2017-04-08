@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Bobs_Tyres.Models.Review>
+
+@{
+    ViewBag.Title = "Testimonials";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section pageTitle{
+    Testimonials
+}
+
+@section pageContent{
+<p>
+    @Html.ActionLink("Create A Testimonial", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Status
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Testimonial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    if (item.StatusID == 1)
+                    {
+                        <div style="color: orangered; text-align: center">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            @Html.DisplayFor(modelItem => item.ReviewStatus.Status)
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div style="color: green; text-align: center">
+                            <i class="fa fa-check-square-o" aria-hidden="true"></i> @Html.DisplayFor(modelItem => item.ReviewStatus.Status)
+                        </div>
+                    }
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Testimonial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ReviewID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ReviewID })
+            </td>
+        </tr>
+                }
+
+</table>
+}

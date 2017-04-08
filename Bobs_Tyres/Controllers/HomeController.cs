@@ -15,7 +15,7 @@ namespace Bobs_Tyres.Controllers
         {
             ViewBag.LatestNews = db.LatestNews.ToList();
             ViewBag.LatestNewsCount = db.LatestNews.ToList().Count();
-            ViewBag.Reviews = db.Reviews.ToList();
+            ViewBag.Reviews = db.Reviews.Where(r => r.StatusID.Equals(2)).OrderByDescending(r => r.Date).ToList();
             var numReviews = 0;
             var totalReview = 0;
             foreach(var review in db.Reviews.ToList())

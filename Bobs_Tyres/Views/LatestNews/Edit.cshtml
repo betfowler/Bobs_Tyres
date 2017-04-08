@@ -1,16 +1,19 @@
 ﻿@model Bobs_Tyres.Models.LatestNews
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit: Latest News";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
+@section pageTitle{
+    Latest News - Edit: @Model.Title
+}
 
-
+@section pageContent{
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>LatestNews</h4>
         <hr />
@@ -52,6 +55,7 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

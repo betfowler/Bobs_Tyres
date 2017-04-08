@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Logged In";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section pageTitle{
+    Manage Your Website
+}
+
+@section pageContent{
+    <div class="row" id="managePageIcons">
+        <div class="col-md-4">
+            <a href="@Url.Action("Index","LatestNews")">
+                <img src="~/Content/Images/latestNews.png" />
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("AdminIndex","Reviews")">
+                <img src="~/Content/Images/Testimonial.png" />
+            </a>
+        </div>
+        <div class="col-md-4">
+            <img src="~/Content/Images/newletter.png" />
+        </div>
+    </div>
+    <div class="row" id="managePageIconText">
+        <div class="col-md-4">
+            <h3>Latest News</h3>
+        </div>
+        <div class="col-md-4">
+            <h3>Testimonials</h3>
+        </div>
+        <div class="col-md-4">
+            <h3>Newsletters</h3>
+        </div>
+    </div>
+}
