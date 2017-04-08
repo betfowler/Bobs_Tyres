@@ -25,25 +25,6 @@ namespace Bobs_Tyres.Controllers
             return RedirectToAction("Index", "Home");            
         }
 
-        // GET: LatestNews/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (SessionPersister.Username != null)
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                LatestNews latestNews = db.LatestNews.Find(id);
-                if (latestNews == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(latestNews);
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
         // GET: LatestNews/Create
         public ActionResult Create()
         {
@@ -63,6 +44,15 @@ namespace Bobs_Tyres.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+                    if(file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path
+                    }
+                }
+
                 db.LatestNews.Add(latestNews);
                 db.SaveChanges();
                 return RedirectToAction("Index");

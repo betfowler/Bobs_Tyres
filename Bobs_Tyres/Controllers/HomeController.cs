@@ -11,8 +11,9 @@ namespace Bobs_Tyres.Controllers
     {
 
         private Bobs_TyresContext db = new Bobs_TyresContext();
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
+            ViewBag.Success = message;
             ViewBag.LatestNews = db.LatestNews.ToList();
             ViewBag.LatestNewsCount = db.LatestNews.ToList().Count();
             ViewBag.Reviews = db.Reviews.Where(r => r.StatusID.Equals(2)).OrderByDescending(r => r.Date).ToList();

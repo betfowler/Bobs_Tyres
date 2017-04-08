@@ -12,6 +12,7 @@ namespace Bobs_Tyres.Models
         public int LatestNewsID { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
     }
 }

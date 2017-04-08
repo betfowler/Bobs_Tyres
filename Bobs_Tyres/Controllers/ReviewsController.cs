@@ -16,16 +16,18 @@ namespace Bobs_Tyres.Controllers
         private Bobs_TyresContext db = new Bobs_TyresContext();
 
         // GET: Reviews
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
+            ViewBag.Success = message;
             var reviews = db.Reviews.Where(r => r.StatusID.Equals(2)).ToList();
             return View(reviews.OrderByDescending(r => r.Date).ToList());
         }
 
-        public ActionResult AdminIndex()
+        public ActionResult AdminIndex(string message)
         {
             if (SessionPersister.Username != null)
             {
+                ViewBag.Success = message;
                 return View(db.Reviews.OrderBy(r => r.StatusID).ToList());
             }
             return RedirectToAction("Index", "Home");
@@ -50,7 +52,8 @@ namespace Bobs_Tyres.Controllers
                 review.Date = DateTime.Now;
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var success = "Your testimonial has been created and is now awaiting approval from our admin.";
+                return RedirectToAction("Index","Home", new { message = success});
             }
 
             return View(review);
@@ -86,9 +89,18 @@ namespace Bobs_Tyres.Controllers
             {
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AdminIndex");
             }
             return View(review);
+        }
+
+        public ActionResult Approve(int id)
+        {
+            Review review = db.Reviews.Find(id);
+            review.StatusID = 2;
+            db.SaveChanges();
+            var success = "Testimonial by " + review.Name + " has been approved.";
+            return RedirectToAction("AdminIndex", "Reviews", new { message = success});
         }
 
         // GET: Reviews/Delete/5
@@ -118,7 +130,7 @@ namespace Bobs_Tyres.Controllers
             Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex");
         }
 
         protected override void Dispose(bool disposing)

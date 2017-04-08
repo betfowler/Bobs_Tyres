@@ -80,11 +80,12 @@
                         if (Model.StatusID == 1)
                         {
                             @Html.ActionLink("Approve This Testimonial", "Approve", "Reviews", new { id = Model.ReviewID }, new { @class = "btn btn-success" })
-                            @Html.ActionLink("Reject This Testimonial", "Reject", "Reviews", new { id = Model.ReviewID }, new { @class = "btn btn-danger", data_toggle =  })
+                            <span>&nbsp;</span>
+                            @Html.ActionLink("Reject This Testimonial", "Delete", "Reviews", new { id = Model.ReviewID }, new { @class = "btn btn-danger" })
                         }
                         else
                         {
-                            @Html.ActionLink("Delete This Testimonial", "Reject", "Reviews", new { id = Model.ReviewID }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Delete This Testimonial", "Delete", "Reviews", new { id = Model.ReviewID }, new { @class = "btn btn-danger" })
                         }
                     }
                 </div>
@@ -96,7 +97,7 @@
                 </div>
             </div>
         </div>
-                        }
+        }
 
     <div>
         @Html.ActionLink("Back to List", "AdminIndex")

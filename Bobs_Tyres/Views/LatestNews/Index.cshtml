@@ -10,43 +10,23 @@
 }
 
 @section pageContent{
-    <p>
-    @Html.ActionLink("Create New", "Create")
+<p>
+    <a href="@Url.Action("Create","LatestNews")"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create New</a>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="newInformation">
+                    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                    <img src="~/Content/Images/LatestNews/@item.Image" />
+                    <h5>@Html.DisplayFor(modelItem => item.Description)</h5>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.LatestNewsID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LatestNewsID })
+                </div>
+            </div>
+        }
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.LatestNewsID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.LatestNewsID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.LatestNewsID })
-            </td>
-        </tr>
-    }
-
-</table>
+    </div>
     
 }

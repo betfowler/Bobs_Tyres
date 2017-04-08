@@ -3,6 +3,14 @@
 }
 
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+@{
+    if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> @ViewBag.Success
+        </div>
+    }
+}
 
 <div class="row">
     <div class="col-md-1"></div>
@@ -167,7 +175,7 @@
     <div class="col-md-6">
         <div class="col-md-12" id="secRow">
             <div class="row">
-                <h2>Testimonials</h2>
+                <h2><a href="@Url.Action("Index","Reviews")">Testimonials</a></h2>
             </div>
             <div class="row">
                 <div class="col-md-8">
@@ -206,7 +214,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @item.Name
-                                <span id="greyedText">@item.Date</span>
+                                <span id="greyedText">@item.Date.ToShortDateString()</span>
                             </div>
                         </div>
                         <div class="row">

@@ -10,9 +10,15 @@
 }
 
 @section pageContent{
-<p>
-    @Html.ActionLink("Create A Testimonial", "Create")
-</p>
+    @{
+        if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success">
+                <strong>Success!</strong> @ViewBag.Success
+            </div>
+        }
+    }
+
 <table class="table">
     <tr>
         <th>
@@ -43,16 +49,20 @@
                 @{
                     if (item.StatusID == 1)
                     {
-                        <div style="color: orangered; text-align: center">
-                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                            @Html.DisplayFor(modelItem => item.ReviewStatus.Status)
+                        <div class="reviewStatusP" style="text-align: center">
+                            <a href="@Url.Action("Edit", "Reviews", new { id = item.ReviewID })">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                @Html.DisplayFor(modelItem => item.ReviewStatus.Status)
+                            </a>
                         </div>
 
                     }
                     else
                     {
-                        <div style="color: green; text-align: center">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> @Html.DisplayFor(modelItem => item.ReviewStatus.Status)
+                        <div class="reviewStatusA" style="text-align: center">
+                            <a href="@Url.Action("Edit","Reviews", new { id= item.ReviewID})">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> @Html.DisplayFor(modelItem => item.ReviewStatus.Status)
+                            </a>
                         </div>
                     }
                 }

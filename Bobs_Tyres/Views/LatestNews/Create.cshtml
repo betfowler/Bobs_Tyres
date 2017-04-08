@@ -27,9 +27,31 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-5" id="imageDisplay">
+                    <img src="~/Content/Images/whiteBox.png" />
                     @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-5">
+                    <div>
+                        <label>Choose A New Image:</label>
+                        <input type="file" name="pic" id="Image" accept="image/*" />
+                    </div>
+                    <br />
+                    <div class="existingImg">
+                        <label>OR Use An Existing Image</label>
+                        <br />
+                        @{
+                            DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~\Content\Images\LatestNews"));
+                            var files = directory.GetFiles().ToList();
+                            var imageCount = 0;
+                            foreach (var file in files)
+                            {
+                                <img class="newsExistingImage" style="filter: grayscale(100%); border: 1px solid 	#e6e6e6" onmouseover="showImage(@imageCount)" onmouseout="hideImage(@imageCount)" onclick="chooseImage(@imageCount)" id="@imageCount" value="@file" src="~/Content/Images/LatestNews/@file" />
+                                imageCount = imageCount + 1;
+                            }
+                        }
+                    </div>
                 </div>
             </div>
 

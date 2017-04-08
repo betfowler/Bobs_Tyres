@@ -22,6 +22,12 @@ function selectSlide(selected) {
     $(".news" + slideIndex).css("display", "block")
 }
 
+function starLoad(n) {
+    $(document).ready(function () {
+        console.log(n);
+    })
+}
+
 function starHover(n) {
     for (var i = 1; i <= 5; i++) {
         $("#star" + i).html("&#9734");
@@ -66,4 +72,21 @@ function initMap() {
         map: map,
         title: "We're here!"
     });
+}
+
+function showImage(imageID) {
+    $("#" + imageID).css({ "filter": "grayscale(0%)", "border": "2px solid #ccc" });
+}
+
+function hideImage(imageID) {
+    if ($("#Image").val() != $("#" + imageID).attr("value")) {
+        $("#" + imageID).css({ "filter": "grayscale(100%)", "border": "1px solid #e6e6e6" });
+    }
+}
+
+function chooseImage(imageID) {
+    $("#Image").val($("#" + imageID).attr("value"));
+    $(".newsExistingImage").css({ "filter": "grayscale(100%)", "border": "1px solid #e6e6e6" })
+    $("#imageDisplay img").attr("src", "/Content/Images/LatestNews/" + $("#" + imageID).attr("value"));
+    $("#" + imageID).css({ "filter": "grayscale(0%)", "border": "2px solid green" });
 }
