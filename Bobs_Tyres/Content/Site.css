@@ -132,6 +132,7 @@ textarea {
     display: none;
     border: 1px solid #165121;
     background-color: white;
+    height: 417px;
 }
 .news1{
     display: block;
@@ -447,7 +448,7 @@ ol > li{
 
 .newInformation {
     text-align: center;
-    height: 350px;
+    height: 400px;
     padding: 5px;
     border: 2px solid #ccc;
     margin-top: 10px;
@@ -468,4 +469,8 @@ ol > li{
     max-width: 300px;
     border: 2px solid #efefef;
     border-radius: 10px;
+}
+
+.hiddenButtonLink{
+    display: none;
 }

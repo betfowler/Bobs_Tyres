@@ -10,9 +10,23 @@
 }
 
 @section pageContent{
-<p>
-    <a href="@Url.Action("Create","LatestNews")"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create New</a>
-</p>
+    @{
+        if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success">
+                <strong>Success!</strong> @ViewBag.Success
+            </div>
+        }
+        if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error!</strong> @ViewBag.Error
+            </div>
+        }
+    }
+    <p>
+        <a href="@Url.Action("Create","LatestNews")"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create New</a>
+    </p>
     <div class="row">
         @foreach (var item in Model)
         {
@@ -21,12 +35,23 @@
                     <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
                     <img src="~/Content/Images/LatestNews/@item.Image" />
                     <h5>@Html.DisplayFor(modelItem => item.Description)</h5>
+                    <label>Button link:</label>
+                    <br />
+                    @{
+                        if (@item.ButtonLink == null)
+                        {
+                            <i>No button for this news item</i>
+                        }
+                        else
+                        {
+                            <a href=@item.ButtonLink>Link</a>
+                        }
+                    }
+                    <br />
                     @Html.ActionLink("Edit", "Edit", new { id = item.LatestNewsID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.LatestNewsID })
                 </div>
             </div>
         }
-
     </div>
-    
 }

@@ -90,3 +90,16 @@ function chooseImage(imageID) {
     $("#imageDisplay img").attr("src", "/Content/Images/LatestNews/" + $("#" + imageID).attr("value"));
     $("#" + imageID).css({ "filter": "grayscale(0%)", "border": "2px solid green" });
 }
+
+function buttonlink() {
+    var selectedValue = $("#buttonDropDown :selected").val();
+    
+    if (selectedValue == "noLink") {
+        $("#ButtonLink").val("");
+        $(".hiddenButtonLink").css("display", "none");
+    }
+    else {
+        $("#ButtonLink").val("");
+        $(".hiddenButtonLink").css("display", "block");
+    }
+}

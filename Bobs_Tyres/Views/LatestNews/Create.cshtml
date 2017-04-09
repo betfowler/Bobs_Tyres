@@ -10,7 +10,15 @@
 }
 
 @section pageContent{
-    @using (Html.BeginForm())
+@{
+    if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong> @ViewBag.Error
+        </div>
+    }
+}
+    @using (Html.BeginForm("Create", "LatestNews", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -28,14 +36,14 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-5" id="imageDisplay">
-                    <img src="~/Content/Images/whiteBox.png" />
-                    @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                    <img src="~/Content/Images/LatestNews/tyre.png" />
+                    @Html.HiddenFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-5">
                     <div>
                         <label>Choose A New Image:</label>
-                        <input type="file" name="pic" id="Image" accept="image/*" />
+                        <input type="file" name="file" id="file" accept="image/*"/>
                     </div>
                     <br />
                     <div class="existingImg">
@@ -59,6 +67,22 @@
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ButtonLink, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    <select id="buttonDropDown" onclick="buttonlink()">
+                        <option value="noLink">No button link</option>
+                        <option value="link">Link to page on this site or another website</option>
+                    </select>
+                    <div class="hiddenButtonLink">
+                        @Html.EditorFor(model => model.ButtonLink, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="linkExample"><i class="fa fa-question-circle" aria-hidden="true"></i> Copy and paste the URL of a page in this site or another website, e.g. http://www.crewkernetyres.co.uk/ </div>
+                    </div>
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>

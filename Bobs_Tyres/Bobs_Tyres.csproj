@@ -48,6 +48,10 @@
       <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentValidation.Mvc, Version=6.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.MVC5.6.4.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -196,6 +200,10 @@
     <Compile Include="Migrations\201704081230273_date.Designer.cs">
       <DependentUpon>201704081230273_date.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704090949288_buttonLink.cs" />
+    <Compile Include="Migrations\201704090949288_buttonLink.Designer.cs">
+      <DependentUpon>201704090949288_buttonLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountModel.cs" />
@@ -219,6 +227,7 @@
     <Content Include="Content\Images\bosal_logo.jpg" />
     <Content Include="Content\Images\carservicingchester.seesites.biz_--_882320879.jpg" />
     <Content Include="Content\Images\continental_logo_yellow_srgb_png-data_1391442108.jpg" />
+    <Content Include="Content\Images\imagefileUploaded.png" />
     <Content Include="Content\Images\LatestNews\DamageWarranty.png" />
     <Content Include="Content\Images\LatestNews\Facebook.png" />
     <Content Include="Content\Images\falken-tires-1.jpg" />
@@ -351,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704081230273_date.resx">
       <DependentUpon>201704081230273_date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090949288_buttonLink.resx">
+      <DependentUpon>201704090949288_buttonLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

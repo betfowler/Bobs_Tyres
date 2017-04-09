@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bobs_Tyres.Models;
 using Bobs_Tyres.Security;
+using System.IO;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -16,10 +17,12 @@ namespace Bobs_Tyres.Controllers
         private Bobs_TyresContext db = new Bobs_TyresContext();
 
         // GET: LatestNews
-        public ActionResult Index()
+        public ActionResult Index(string message, string errormessage)
         {
             if (SessionPersister.Username != null)
             {
+                ViewBag.Success = message;
+                ViewBag.Error = errormessage;
                 return View(db.LatestNews.ToList());
             }
             return RedirectToAction("Index", "Home");            
@@ -30,6 +33,12 @@ namespace Bobs_Tyres.Controllers
         {
             if (SessionPersister.Username != null)
             {
+                var numNews = db.LatestNews.Count();
+                if(numNews == 10)
+                {
+                    var errormessage = "You can't have more than 10 news items - remove an existing news item to add a new one.";
+                    return RedirectToAction("Index", new { errormessage = errormessage }); 
+                }
                 return View();
             }
             return RedirectToAction("Index", "Home");
@@ -40,7 +49,7 @@ namespace Bobs_Tyres.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LatestNewsID,Title,Image,Description")] LatestNews latestNews)
+        public ActionResult Create([Bind(Include = "LatestNewsID,Title,Image,Description,ButtonLink")] LatestNews latestNews)
         {
             if (ModelState.IsValid)
             {
@@ -49,13 +58,35 @@ namespace Bobs_Tyres.Controllers
                     var file = Request.Files[0];
                     if(file != null && file.ContentLength > 0)
                     {
-                        var fileName = Path
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("../Content/Images/LatestNews"), fileName);
+
+                        if(db.LatestNews.Where(ln => ln.Image.Equals(fileName)).FirstOrDefault() != null)
+                        {
+                            ViewBag.Error = "An image with this name already exists, please rename the file or select it from the list of existing images.";
+                            return View(latestNews);
+                        }
+                        else
+                        {
+                            latestNews.Image = fileName;
+                        }
+                        file.SaveAs(path);
                     }
+                    else if (String.IsNullOrEmpty(latestNews.Image))
+                    {
+                        latestNews.Image = "tyre.png";
+                    }
+                }
+                else if (String.IsNullOrEmpty(latestNews.Image))
+                {
+                    latestNews.Image = "tyre.png";
                 }
 
                 db.LatestNews.Add(latestNews);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ModelState.Clear();
+                var success = "News item successfully added";
+                return RedirectToAction("Index", new { message = success});
             }
 
             return View(latestNews);
@@ -85,13 +116,36 @@ namespace Bobs_Tyres.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LatestNewsID,Title,Image,Description")] LatestNews latestNews)
+        public ActionResult Edit([Bind(Include = "LatestNewsID,Title,Image,Description,ButtonLink")] LatestNews latestNews)
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("../Content/Images/LatestNews"), fileName);
+
+                        if (db.LatestNews.Where(ln => ln.Image.Equals(fileName)).FirstOrDefault() != null)
+                        {
+                            ViewBag.Error = "An image with this name already exists, please rename the file or select it from the list of existing images.";
+                            return View(latestNews);
+                        }
+                        else
+                        {
+                            latestNews.Image = fileName;
+                        }
+                        file.SaveAs(path);
+                    }
+                }
+
+                ModelState.Clear();
                 db.Entry(latestNews).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var success = "News item successfully altered";
+                return RedirectToAction("Index", new { message = success});
             }
             return View(latestNews);
         }

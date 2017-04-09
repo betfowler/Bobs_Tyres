@@ -22,9 +22,9 @@ namespace Bobs_Tyres.Controllers
             return View();
         }
 
-        public ActionResult AccessDenied()
+        public ActionResult Home()
         {
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         // GET: Accounts/Create

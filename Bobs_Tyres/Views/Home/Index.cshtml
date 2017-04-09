@@ -125,31 +125,36 @@
                                 var position = "news" + counter.ToString();
                                 var radiobutton = "img-" + counter.ToString();
 
-                            <input type="radio" name="radio-btn" id="@radiobutton" />
-                            <li class="news @position">
-                                <div class="row">
-                                    <div class="col-md-12" id="slideContent">
-                                        <div class="row" id="newsTitle">
-                                            <h2><b>@item.Title</b></h2>
-                                        </div>
-                                        <div class="row" id="newsImage">
-                                            <img src="../Content/Images/@item.Image" />
-                                        </div>
-                                        <div class="row" id="newsDescription">
-                                            <div class="col-md-12">
-                                                <h4>@item.Description</h4>
+                                <input type="radio" name="radio-btn" id="@radiobutton" />
+                                <li class="news @position">
+                                    <div class="row">
+                                        <div class="col-md-12" id="slideContent">
+                                            <div class="row" id="newsTitle">
+                                                <h2><b>@item.Title</b></h2>
                                             </div>
-                                        </div>
-                                        <div class="row" id="findoutmore">
-                                            @Html.ActionLink("Find Out More", "Index", "Home", new { @class = "btn btn-default" })
-                                        </div>
+                                            <div class="row" id="newsImage">
+                                                <img src="~/Content/Images/LatestNews/@item.Image" />
+                                            </div>
+                                            <div class="row" id="newsDescription">
+                                                <div class="col-md-12">
+                                                    <h4>@item.Description</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="findoutmore">
+                                                @{
+                                                    if (!String.IsNullOrEmpty(@item.ButtonLink))
+                                                    {
+                                                        <a href=@item.ButtonLink class="btn btn-default">Find Out More</a>
+                                                    }
+                                                }
+                                            </div>
 
-                                        <a class="prev" onclick="plusSlides(-1, @ViewBag.LatestNewsCount, @counter)">&#10094</a>
-                                        <a class="next" onclick="plusSlides(1, @ViewBag.LatestNewsCount, @counter)">&#10095</a>
+                                            <a class="prev" onclick="plusSlides(-1, @ViewBag.LatestNewsCount, @counter)">&#10094</a>
+                                            <a class="next" onclick="plusSlides(1, @ViewBag.LatestNewsCount, @counter)">&#10095</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            }
+                                </li>
+                                                    }
                         </ul>
                     </div>
                 </div>
@@ -175,7 +180,7 @@
     <div class="col-md-6">
         <div class="col-md-12" id="secRow">
             <div class="row">
-                <h2><a href="@Url.Action("Index","Reviews")">Testimonials</a></h2>
+                <h2><a style="color:#333333" href="@Url.Action("Index","Reviews")">Testimonials</a></h2>
             </div>
             <div class="row">
                 <div class="col-md-8">
