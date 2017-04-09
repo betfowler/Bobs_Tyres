@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Bobs_Tyres.Models;
 using Bobs_Tyres.ViewModels;
 using Bobs_Tyres.Security;
+using Facebook;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -24,6 +25,22 @@ namespace Bobs_Tyres.Controllers
 
         public ActionResult Home()
         {
+            return View();
+        }
+
+        public ActionResult Newsletter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Newsletter([Bind(Include = "Message")] Newsletter newsletter)
+        {
+            string fbAppId = "646957715495504";
+            string fbSecretAppId = "c77c80685db16953cb93e075bc25c302";
+            var accessToken = "EAACEdEose0cBAENrZCRbN5DPUOhrhG5UbquZB6ZCSMputZBUToZCr7bchD4gU7xdlR9qgkKJvm0ZAwg4N3H8ZBnTn51FNxOlVZBLnnCjAx3oYtmbmu2TBsokVcYYMBZCUhP015EhYc9oZBzcw56FZAOU02YI1am1FUjpqS7ZCrlvHtkmmZA5jwvgZB3fMaN6yuZBHF3ZCAFRIDJiKOuEjQZDZD";
+            
             return View();
         }
 
@@ -52,6 +69,7 @@ namespace Bobs_Tyres.Controllers
 
             return View(account);
         }
+
 
         [HttpPost]
         public ActionResult Login(AccountViewModel avm, AccountModel am)

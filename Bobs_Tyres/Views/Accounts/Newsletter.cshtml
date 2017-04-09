@@ -1,0 +1,69 @@
+﻿@model Bobs_Tyres.Models.Newsletter
+@{
+    ViewBag.Title = "Newsletter";
+}
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<h2>Newsletter</h2>
+
+@{
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info">
+            <strong>Infor!</strong> @ViewBag.Message
+        </div>
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+            <div><i class="fa fa-question-circle" aria-hidden="true"></i> Copy and paste the URL of an image to upload, e.g. http://www.bobstyresltd.co.uk/images/logo.jpg </div>
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a onclick="postToFeed(); return false;" class="btn btn-default">Submit</a>
+        </div>
+    </div>
+
+}
+
+<script>
+    FB.init({ appId: "646957715495504", status: true, cookie: true });
+    function postToFeed() {
+        var message = String($("#Message").val());
+        var imageUrl = String($("#Image").val());
+        console.log(imageUrl);
+
+            FB.api('/111357172747606/feed', 'post',
+            {
+                access_token: 'EAAJMZA5TRGlABAMdxJk43shhO3qyoFWqNpKPKfG735D9cRG41vS4dZAoThYpklXKO7HROuxSXon2JemBzFvxuxw6RKMEjqPZCBpdVYqLbZCnefyF8FplwXpcLtRdZCtAqPL96aix0iQAD5Ar01IKM06c5rIaSc4u46B3f4pXuvJaSBdvS8b14fcisSRdOVaZBYNVaYotWZARLJMsxDyEeqIwfDEVcp1wWiM5bsadVV3KAZDZD',
+                message: message,
+                link: imageUrl
+            },
+            function (response) {
+                if (!response || response.error) {
+                    alert(JSON.stringify(response.error));
+                } else {
+                    alert("Message uploaded to facebook successfully");
+                    $("#Message").val("");
+                    $("#Image").val("");
+                }
+            });
+    }
+</script>

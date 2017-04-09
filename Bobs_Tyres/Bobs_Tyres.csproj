@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -210,6 +214,7 @@
     <Compile Include="Models\Bobs_TyresContext.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\LatestNews.cs" />
+    <Compile Include="Models\Newsletter.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ReviewStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -274,6 +279,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Content\Files\Service-Schedule.pdf" />
     <Content Include="Content\Files\Service-Price-List.pdf" />
+    <None Include="Properties\PublishProfiles\BobsTyres.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -330,6 +336,7 @@
     <Content Include="Views\Accounts\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Reviews\AdminIndex.cshtml" />
+    <Content Include="Views\Accounts\Newsletter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

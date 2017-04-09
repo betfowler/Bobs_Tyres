@@ -19,7 +19,7 @@ namespace Bobs_Tyres.Controllers
             ViewBag.Reviews = db.Reviews.Where(r => r.StatusID.Equals(2)).OrderByDescending(r => r.Date).ToList();
             var numReviews = 0;
             var totalReview = 0;
-            foreach(var review in db.Reviews.ToList())
+            foreach(var review in db.Reviews.Where(r => r.StatusID.Equals(2)).ToList())
             {
                 numReviews = numReviews + 1;
                 totalReview = totalReview + review.Rating;
