@@ -474,3 +474,14 @@ ol > li{
 .hiddenButtonLink{
     display: none;
 }
+
+#facebookConnection{
+    margin-top: 20px;
+    background-color: #efefef;
+    color:#595959;
+}
+
+#facebookButton{
+    pointer-events: none;
+    cursor: default;
+}

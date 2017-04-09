@@ -1,15 +1,22 @@
 ﻿@model Bobs_Tyres.Models.Newsletter
+
 @{
     ViewBag.Title = "Newsletter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+@section pageTitle{
+    Newsletter
+}
+
+@section pageContent{
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-<h2>Newsletter</h2>
 
 @{
     if (ViewBag.Message != null)
     {
         <div class="alert alert-info">
-            <strong>Infor!</strong> @ViewBag.Message
+            <strong>Info!</strong> @ViewBag.Message
         </div>
     }
 }
@@ -37,33 +44,41 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <a onclick="postToFeed(); return false;" class="btn btn-default">Submit</a>
+            <a onclick="postToFeed(); return false;" class="btn btn-info" id="facebookButton">Post To Facebook</a>
+            <a class="btn btn-default">Send Newsletter</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" id="facebookConnection">
+            <a href="https://www.facebook.com"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+            <span id="facebookStatus"></span>
+            <p><i>To post on facebook, the status above needs to be 'connected'.  This will only happen if you are logged in on facebook as Bobs Tyres on the device you are using.</i></p>
         </div>
     </div>
 
 }
 
 <script>
-    FB.init({ appId: "646957715495504", status: true, cookie: true });
-    function postToFeed() {
-        var message = String($("#Message").val());
-        var imageUrl = String($("#Image").val());
-        console.log(imageUrl);
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '646957715495504',
+            cookie: true,
+            xfbml: true,
+            version: 'v2.8'
+        });
 
-            FB.api('/111357172747606/feed', 'post',
-            {
-                access_token: 'EAAJMZA5TRGlABAMdxJk43shhO3qyoFWqNpKPKfG735D9cRG41vS4dZAoThYpklXKO7HROuxSXon2JemBzFvxuxw6RKMEjqPZCBpdVYqLbZCnefyF8FplwXpcLtRdZCtAqPL96aix0iQAD5Ar01IKM06c5rIaSc4u46B3f4pXuvJaSBdvS8b14fcisSRdOVaZBYNVaYotWZARLJMsxDyEeqIwfDEVcp1wWiM5bsadVV3KAZDZD',
-                message: message,
-                link: imageUrl
-            },
-            function (response) {
-                if (!response || response.error) {
-                    alert(JSON.stringify(response.error));
-                } else {
-                    alert("Message uploaded to facebook successfully");
-                    $("#Message").val("");
-                    $("#Image").val("");
-                }
-            });
-    }
+        FB.getLoginStatus(function (response) {
+            $("#facebookStatus").text(response.status);
+            if (response.status === 'connected') {
+                $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
+                var access_token = FB.getAuthResponse()['accessToken'];
+                console.log(access_token);
+                FB.api('/me', function (response) {
+                    console.log(response.name);
+                })
+            }
+        })
+    };
 </script>
+
+}
