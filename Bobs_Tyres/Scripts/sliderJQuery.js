@@ -103,3 +103,66 @@ function buttonlink() {
         $(".hiddenButtonLink").css("display", "block");
     }
 }
+
+function noImage() {
+    $(".urlLink").css("display", "none");
+    $(".uploadImage").css("display", "none");
+    $(".existingImg").css("display", "none");
+    $("#dropdownTitle").text("No Image");
+    $("#Image").val("");
+}
+
+function imageUrl() {
+    $(".urlLink").css("display", "block");
+    $(".uploadImage").css("display", "none");
+    $(".existingImg").css("display", "none");
+    $("#dropdownTitle").text("Url link to image");
+    $("#Image").val("");
+}
+
+function uploadImage(){
+    $(".urlLink").css("display", "none");
+    $(".uploadImage").css("display", "block");
+    $(".existingImg").css("display", "none");
+    $("#dropdownTitle").text("Upload image");
+    $("#Image").val("");
+}
+
+function existingImage(){
+    $(".urlLink").css("display", "none");
+    $(".uploadImage").css("display", "none");
+    $(".existingImg").css("display", "block");
+    $("#dropdownTitle").text("Use existing image");
+    $("#Image").val("");
+}
+
+function removeAjax(imageName) {
+    $.ajax({
+        type: "POST",
+        url: "/Accounts/AjaxRemoveImage",
+        data: '{imageName: "' + imageName +'"}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            $(".alert-success").css("display", "block");
+            $("#successMessage").text("Image removed.");
+            $(".uploadedImage").css("display", "none");
+            $(".dropdown").css("display", "block");
+            
+
+        },
+        failure: function (response) {
+            $(".alert-danger").css("display", "block");
+            $("#errorMessage").text("Unable to remove image.");
+        },
+        error: function (response) {
+            $(".alert-danger").css("display", "block");
+            $("#errorMessage").text("Unable to remove image.");
+        }
+    });
+}
+
+function setImageVal(imageName, folder) {
+    $("#Image").attr('value', imageName);
+    $("#folderLocation").attr('value', folder)
+}

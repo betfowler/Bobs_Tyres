@@ -10,6 +10,7 @@ using Bobs_Tyres.Models;
 using Bobs_Tyres.ViewModels;
 using Bobs_Tyres.Security;
 using Facebook;
+using System.IO;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -28,20 +29,77 @@ namespace Bobs_Tyres.Controllers
             return View();
         }
 
-        public ActionResult Newsletter()
+        public ActionResult Newsletter(string image, string message, string title, string error)
         {
-            return View();
+            Newsletter newsletter = new Newsletter();
+            newsletter.Message = message;
+            newsletter.Title = title;
+            ViewBag.Image = image;
+            ViewBag.Error = error;
+            return View(newsletter);
+        }
+
+        [HttpPost]
+        public JsonResult AjaxRemoveImage (string imageName)
+        {
+            var path = HttpContext.Server.MapPath("/Content/Images/Newsletter/" + imageName);
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+                return Json(new { message="success"});
+            }
+            return Json(new { message = "error" });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Newsletter([Bind(Include = "Message")] Newsletter newsletter)
+        public ActionResult Newsletter([Bind(Include = "Title,Message,Image")] Newsletter newsletter)
         {
-            string fbAppId = "646957715495504";
-            string fbSecretAppId = "c77c80685db16953cb93e075bc25c302";
-            var accessToken = "EAACEdEose0cBAENrZCRbN5DPUOhrhG5UbquZB6ZCSMputZBUToZCr7bchD4gU7xdlR9qgkKJvm0ZAwg4N3H8ZBnTn51FNxOlVZBLnnCjAx3oYtmbmu2TBsokVcYYMBZCUhP015EhYc9oZBzcw56FZAOU02YI1am1FUjpqS7ZCrlvHtkmmZA5jwvgZB3fMaN6yuZBHF3ZCAFRIDJiKOuEjQZDZD";
-            
+            string imageUrl = "localhost:58724/Content/Images/Newsletter/" + newsletter.Image;
             return View();
+        }
+        [HttpPost]
+        public ActionResult NewsImageUpload(Newsletter newsletter)
+        {
+            var fileName = "";
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+                if (file != null && file.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("../Content/Images/Newsletter"), fileName);
+
+                    DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~\Content\Images\Newsletter"));
+                    var pictures = directory.GetFiles().ToList();
+                    foreach(var picture in pictures)
+                    {
+                        var name = picture.ToString();
+                        if(name == fileName)
+                        {
+                            fileName = "";
+                            string message = "An image with this name already exists, please rename the file or select it from the list of existing images.";
+                            return RedirectToAction("Newsletter", new { image = fileName, message = newsletter.Message, title = newsletter.Title, error = message });
+                        }
+                    }
+
+                    DirectoryInfo newsdirectory = new DirectoryInfo(Server.MapPath(@"~\Content\Images\LatestNews"));
+                    var newspictures = newsdirectory.GetFiles().ToList();
+                    foreach (var picture in newspictures)
+                    {
+                        var name = picture.ToString();
+                        if (name == fileName)
+                        {
+                            fileName = "";
+                            string message = "An image with this name already exists, please rename the file or select it from the list of existing images.";
+                            return RedirectToAction("Newsletter", new { image = fileName, message = newsletter.Message, title = newsletter.Title, error = message });
+                        }
+                    }
+
+                    file.SaveAs(path);
+                }
+            }
+            return RedirectToAction("Newsletter", new { image = fileName, message = newsletter.Message, title = newsletter.Title });
         }
 
         // GET: Accounts/Create

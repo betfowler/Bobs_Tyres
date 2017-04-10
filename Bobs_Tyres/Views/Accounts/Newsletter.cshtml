@@ -10,75 +10,215 @@
 }
 
 @section pageContent{
-<script src="http://connect.facebook.net/en_US/all.js"></script>
-
-@{
-    if (ViewBag.Message != null)
-    {
-        <div class="alert alert-info">
-            <strong>Info!</strong> @ViewBag.Message
-        </div>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    @{
+        if (!String.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-danger alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Error!</strong> @ViewBag.Error
+            </div>
+        }
     }
-}
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
-        </div>
+    <div class="alert alert-danger alert-dismissable" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> <span id="errorMessage"></span>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-            <div><i class="fa fa-question-circle" aria-hidden="true"></i> Copy and paste the URL of an image to upload, e.g. http://www.bobstyresltd.co.uk/images/logo.jpg </div>
-            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
-        </div>
+    <div class="alert alert-success alert-dismissable" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> <span id="successMessage"></span>
     </div>
+    @using (Html.BeginForm("NewsImageUpload", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <a onclick="postToFeed(); return false;" class="btn btn-info" id="facebookButton">Post To Facebook</a>
-            <a class="btn btn-default">Send Newsletter</a>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    <p>(For newsletter only)</p>
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Image</label>
+                <div class="col-md-10">
+
+                    <div class="row" id="break"></div>
+
+                    @{
+                        if (!String.IsNullOrEmpty(ViewBag.Image))
+                        {
+                            <div class="uploadedImage" style="display: block">
+                                <img src="~/Content/Images/Newsletter/@ViewBag.Image" />
+                                <br />
+                                <a class="btn btn-default" onclick="removeAjax('@ViewBag.Image'); @ViewBag.Image = ''"><i class="fa fa-trash" aria-hidden="true"></i> Remove Image</a>
+                            </div>
+                            <div class="dropdown" style="display: none">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span id="dropdownTitle">Image</span> <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a onclick="noImage()">No image</a></li>
+                                    <li><a onclick="imageUrl()">Url link to image</a></li>
+                                    <li><a onclick="uploadImage()">Upload image</a></li>
+                                    <li><a onclick="existingImage()">Use existing image</a></li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="uploadedImage" style="display: none">
+                                <img src="~/Content/Images/Newsletter/@ViewBag.Image" />
+                                <br />
+                                <a class="btn btn-default" onclick="removeAjax('@ViewBag.Image')"><i class="fa fa-trash" aria-hidden="true"></i> Remove Image</a>
+                            </div>
+                            <div class="dropdown" style="display: block">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span id="dropdownTitle">Image</span> <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a onclick="noImage()">No image</a></li>
+                                    <li><a onclick="imageUrl()">Url link to image</a></li>
+                                    <li><a onclick="uploadImage()">Upload image</a></li>
+                                    <li><a onclick="existingImage()">Use existing image</a></li>
+                                </ul>
+                            </div>
+                        }
+                    }
+                    <div class="row" id="break"></div>
+                    <div class="urlLink" style="display: none">
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                        <div><i class="fa fa-question-circle" aria-hidden="true"></i> Copy and paste the URL of an image to upload, e.g. http://www.bobstyresltd.co.uk/images/logo.jpg </div>
+                    </div>
+                    <div class="uploadImage" style="display: none">
+                        <input type="file" name="file" id="file" accept="image/*" />
+                        <input type="submit" value="Upload" class="btn btn-default" />
+                    </div>
+                    <div class="existingImg" style="display: none">
+                        @{
+                            DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~\Content\Images\Newsletter"));
+                            var files = directory.GetFiles().ToList();
+                            var imageCount = 0;
+                            if (files.Count > 0)
+                            {
+                                foreach (var file in files)
+                                {
+                                    <img class="newsExistingImage" style="filter: grayscale(100%); border: 1px solid 	#e6e6e6" onmouseover="showImage(@imageCount)" onmouseout="hideImage(@imageCount)" onclick="chooseImage(@imageCount); setImageVal('@file', 'Newsletter')" id="@imageCount" value="@file" src="~/Content/Images/Newsletter/@file" />
+                                    imageCount = imageCount + 1;
+                                }
+                            }
+
+                            DirectoryInfo newsdirectory = new DirectoryInfo(Server.MapPath(@"~\Content\Images\LatestNews"));
+                            var newsfiles = newsdirectory.GetFiles().ToList();
+                            foreach (var file in newsfiles)
+                            {
+                                <img class="newsExistingImage" style="filter: grayscale(100%); border: 1px solid 	#e6e6e6" onmouseover="showImage(@imageCount)" onmouseout="hideImage(@imageCount)" onclick="chooseImage(@imageCount); setImageVal('@file', 'LatestNews')" id="@imageCount" value="@file" src="~/Content/Images/LatestNews/@file" />
+                                imageCount = imageCount + 1;
+                            }
+                        }
+                        <input type="text" id="folderLocation" value="" hidden="hidden" />
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a onclick="postToFeed(); return false;" class="btn btn-info" id="facebookButton">Post To Facebook</a>
+                    <a class="btn btn-default">Send Newsletter</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" id="facebookConnection">
+                    <a href="https://www.facebook.com"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                    <span id="facebookStatus"></span>
+                    <p><i>To post on facebook, the status above needs to be 'connected'.  This will only happen if you are logged in on facebook as Bobs Tyres on the device you are using.</i></p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10" id="facebookConnection">
-            <a href="https://www.facebook.com"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-            <span id="facebookStatus"></span>
-            <p><i>To post on facebook, the status above needs to be 'connected'.  This will only happen if you are logged in on facebook as Bobs Tyres on the device you are using.</i></p>
-        </div>
-    </div>
 
-}
+                            }
 
-<script>
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: '646957715495504',
-            cookie: true,
-            xfbml: true,
-            version: 'v2.8'
-        });
+    <script>
+        var access_token = "";
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '646957715495504',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
 
-        FB.getLoginStatus(function (response) {
-            $("#facebookStatus").text(response.status);
-            if (response.status === 'connected') {
-                $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
-                var access_token = FB.getAuthResponse()['accessToken'];
-                console.log(access_token);
-                FB.api('/me', function (response) {
-                    console.log(response.name);
-                })
+            FB.getLoginStatus(function (response) {
+                $("#facebookStatus").text(response.status);
+                if (response.status === 'connected') {
+                    $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
+                    var access_token = FB.getAuthResponse()['accessToken'];
+                }
+            })
+        };
+
+        function postToFeed() {
+            var message = String($("#Message").val());
+            var imageUrl = String($("#Image").val());
+
+            if (imageUrl == "") {
+                FB.api('/111357172747606/feed', 'post',
+                {
+                    access_token: access_token,
+                    message: message
+                },
+                function (response) {
+                    if (!response || response.error) {
+                        $(".alert-danger").css("display", "block");
+                        $("#errorMessage").text("There was an error - unable to post to facebook.");
+                    } else {
+                        $(".alert-success").css("display", "block");
+                        $("#successMessage").text("Message successfully posted to facebook.");
+                    }
+                }
+            )
             }
-        })
-    };
-</script>
+            else {
+                if (imageUrl.slice(0, 4) != "http") {
+                    var http = "http://";
+                    var folder = String($("#folderLocation").val());
+                    console.log(folder);
+                    if (folder == "" || folder == "Newsletter") {
+                        imageUrl = http + "bethanyfowler-001-site2.btempurl.com/Content/Images/Newsletter/" + imageUrl;
+                    }
+                    else {
+                        imageUrl = http + "bethanyfowler-001-site2.btempurl.com/Content/Images/LatestNews/" + imageUrl;
+                    }
+                    console.log(imageUrl);
+                }
 
+                FB.api('/111357172747606/photos', 'post',
+                {
+                    access_token: access_token,
+                    message: message,
+                    url: imageUrl
+                },
+                function (response) {
+                    if (!response || response.error) {
+                        $(".alert-danger").css("display", "block");
+                        $("#errorMessage").text("There was an error - unable to post to facebook.");
+                    } else {
+                        $(".alert-success").css("display", "block");
+                        $("#successMessage").text("Message successfully posted to facebook.");
+                    }
+                }
+            )
+            }
+        }
+    </script>
 }

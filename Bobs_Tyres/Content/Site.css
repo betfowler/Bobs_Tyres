@@ -464,7 +464,8 @@ ol > li{
     border-radius: 10px;
 }
 
-#imageDisplay img{
+#imageDisplay img,
+.uploadedImage img{
     max-height: 300px;
     max-width: 300px;
     border: 2px solid #efefef;
