@@ -11,6 +11,9 @@ using Bobs_Tyres.ViewModels;
 using Bobs_Tyres.Security;
 using Facebook;
 using System.IO;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -29,13 +32,14 @@ namespace Bobs_Tyres.Controllers
             return View();
         }
 
-        public ActionResult Newsletter(string image, string message, string title, string error)
+        public ActionResult Newsletter(string image, string message, string title, string error, string success)
         {
             Newsletter newsletter = new Newsletter();
             newsletter.Message = message;
             newsletter.Title = title;
             ViewBag.Image = image;
             ViewBag.Error = error;
+            ViewBag.Success = success;
             return View(newsletter);
         }
 
@@ -51,15 +55,47 @@ namespace Bobs_Tyres.Controllers
             return Json(new { message = "error" });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Newsletter([Bind(Include = "Title,Message,Image")] Newsletter newsletter)
+        [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+        public class NewsletterAttribute : ActionNameSelectorAttribute
         {
-            string imageUrl = "localhost:58724/Content/Images/Newsletter/" + newsletter.Image;
-            return View();
+            public string Name { get; set; }
+            public string Argument { get; set; }
+
+            public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
+            {
+                var isValidName = false;
+                var keyValue = string.Format("{0}:{1}", Name, Argument);
+                var value = controllerContext.Controller.ValueProvider.GetValue(keyValue);
+                if (value != null)
+                {
+                    controllerContext.Controller.ControllerContext.RouteData.Values[Name] = Argument;
+                    isValidName = true;
+                }
+
+                return isValidName; 
+            }
         }
         [HttpPost]
-        public ActionResult NewsImageUpload(Newsletter newsletter)
+        [ValidateAntiForgeryToken]
+        [Newsletter(Name = "action", Argument = "Send")]
+        public async Task<ActionResult> Send([Bind(Include = "Title,Message,Image")] Newsletter newsletter)
+        {
+            //send email
+            var body = "<p>Title: {0}</p><p>Message: {1}</p><p>Image: <img src='{2}'></p>";
+            string messageBody = string.Format(body, newsletter.Title.ToString(), newsletter.Message.ToString(), newsletter.Image);
+            string to = "bethany.fowler14@gmail.com";
+            string from = "bobstyresandgarageservices@gmail.com";
+            string subject = "Bobs Tyres";
+
+            await SendMessage(to, from, messageBody, subject);
+            var success = "Newsletter successfully sent.";
+            return RedirectToAction("Newsletter", new { image = newsletter.Image, message = newsletter.Message, title = newsletter.Title, success = success });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Newsletter(Name ="action", Argument = "Upload")]
+        public ActionResult Upload(Newsletter newsletter)
         {
             var fileName = "";
             if (Request.Files.Count > 0)
@@ -72,10 +108,10 @@ namespace Bobs_Tyres.Controllers
 
                     DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~\Content\Images\Newsletter"));
                     var pictures = directory.GetFiles().ToList();
-                    foreach(var picture in pictures)
+                    foreach (var picture in pictures)
                     {
                         var name = picture.ToString();
-                        if(name == fileName)
+                        if (name == fileName)
                         {
                             fileName = "";
                             string message = "An image with this name already exists, please rename the file or select it from the list of existing images.";
@@ -155,6 +191,34 @@ namespace Bobs_Tyres.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public async Task<ActionResult> SendMessage(string to, string from, string body, string subject)
+        {
+            //send email
+            var message = new MailMessage();
+            message.Body = body;
+            message.To.Add(new MailAddress(to));
+            message.From = new MailAddress(from);
+            message.Subject = subject;
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "bobstyresandgarageservices@gmail.com",
+                    Password = "seryTB0bs"
+                };
+                smtp.Credentials = credential;
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+
+                await smtp.SendMailAsync(message);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

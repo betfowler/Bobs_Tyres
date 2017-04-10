@@ -381,6 +381,16 @@ textarea {
   border-color: #165121;
   font-size: 20px;
 }
+
+.btn-info:hover{
+  background-color: #3B5998;
+  border-color: #3B5998;
+}
+.btn-info{
+    background-color: #3B5998;
+  border-color: #3B5998;
+}
+
 .btn-home:hover,
 .btn-primary:hover {
   color: #165121;
@@ -486,3 +496,4 @@ ol > li{
     pointer-events: none;
     cursor: default;
 }
+

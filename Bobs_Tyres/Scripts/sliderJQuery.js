@@ -166,3 +166,18 @@ function setImageVal(imageName, folder) {
     $("#Image").attr('value', imageName);
     $("#folderLocation").attr('value', folder)
 }
+
+function resetNewsletter() {
+    $("#Title").val("");
+    $("#Message").val("");
+    $("#Image").val("");
+    $("#Image").attr('value', "");
+    $("#folderLocation").attr('value', "")
+    $(".uploadedImage").css("display", "none");
+    $(".dropdown").css("display", "block");
+    $(".urlLink").css("display", "none");
+    $(".uploadImage").css("display", "none");
+    $(".existingImg").css("display", "none");
+    $("#dropdownTitle").text("No Image");
+    $("#Image").val("");
+}
