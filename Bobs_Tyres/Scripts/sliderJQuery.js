@@ -110,6 +110,8 @@ function noImage() {
     $(".existingImg").css("display", "none");
     $("#dropdownTitle").text("No Image");
     $("#Image").val("");
+    $("#imageImage").css("display", "none");
+    $("#Image").css("display", "none");
 }
 
 function imageUrl() {
@@ -126,6 +128,8 @@ function uploadImage(){
     $(".existingImg").css("display", "none");
     $("#dropdownTitle").text("Upload image");
     $("#Image").val("");
+    $("#imageImage").css("display", "none");
+    $("#Image").css("display", "none");
 }
 
 function existingImage(){
@@ -164,7 +168,7 @@ function removeAjax(imageName) {
 
 function setImageVal(imageName, folder) {
     $("#Image").attr('value', imageName);
-    $("#folderLocation").attr('value', folder)
+    $("#Folder").attr('value', folder)
 }
 
 function resetNewsletter() {

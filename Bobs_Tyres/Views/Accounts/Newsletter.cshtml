@@ -68,9 +68,29 @@
                         if (!String.IsNullOrEmpty(ViewBag.Image))
                         {
                             <div class="uploadedImage" style="display: block">
-                                <img src="~/Content/Images/Newsletter/@ViewBag.Image" />
-                                <br />
-                                <a class="btn btn-default" onclick="removeAjax('@ViewBag.Image')"><i class="fa fa-trash" aria-hidden="true"></i> Remove Image</a>
+                                @{
+                                    if (ViewBag.Image.Substring(0, Math.Min(ViewBag.Image.Length, 4)) == "http")
+                                    {
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span id="dropdownTitle">Image</span> <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a onclick="noImage()">No image</a></li>
+                                                <li><a onclick="imageUrl()">Url link to image</a></li>
+                                                <li><a onclick="uploadImage()">Upload image</a></li>
+                                                <li><a onclick="existingImage()">Use existing image</a></li>
+                                            </ul>
+                                        </div>
+                                        <img src="@ViewBag.Image" id="imageImage" />
+                                        <br />
+                                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/Images/Newsletter/@ViewBag.Image" />
+                                        <br />
+                                        <a class="btn btn-default" onclick="removeAjax('@ViewBag.Image')"><i class="fa fa-trash" aria-hidden="true"></i> Remove Image</a>
+                                    }
+                                }
                             </div>
                             <div class="dropdown" style="display: none">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span id="dropdownTitle">Image</span> <span class="caret"></span></button>
@@ -107,7 +127,7 @@
                     </div>
                     <div class="uploadImage" style="display: none">
                         <input type="file" name="file" id="file" accept="image/*" />
-                        <input type="submit" value="Upload" class="btn btn-default" name="action:Upload"/>
+                        <input type="submit" value="Upload" class="btn btn-default" name="action:Upload" />
                     </div>
                     <div class="existingImg" style="display: none">
                         @{
@@ -131,7 +151,7 @@
                                 imageCount = imageCount + 1;
                             }
                         }
-                        <input type="text" id="folderLocation" value="" hidden="hidden" />
+                        @Html.HiddenFor(model => model.Folder, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                 </div>
@@ -153,77 +173,78 @@
             </div>
         </div>
                             }
-        <script>
-            var access_token = "";
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: '646957715495504',
-                    cookie: true,
-                    xfbml: true,
-                    version: 'v2.8'
-                });
+    <script>
+        var access_token = "";
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '646957715495504',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
 
-                FB.getLoginStatus(function (response) {
-                    $("#facebookStatus").text(response.status);
-                    if (response.status === 'connected') {
-                        $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
-                        var access_token = FB.getAuthResponse()['accessToken'];
-                    }
-                })
-            };
-
-            function postToFeed() {
-                var message = String($("#Message").val());
-                var imageUrl = String($("#Image").val());
-
-                if (imageUrl == "") {
-                    FB.api('/111357172747606/feed', 'post',
-                    {
-                        access_token: access_token,
-                        message: message
-                    },
-                    function (response) {
-                        if (!response || response.error) {
-                            $(".alert-danger").css("display", "block");
-                            $("#errorMessage").text("There was an error - unable to post to facebook.");
-                        } else {
-                            $(".alert-success").css("display", "block");
-                            $("#successMessage").text("Message successfully posted to facebook.");
-                        }
-                    }
-                )
+            FB.getLoginStatus(function (response) {
+                $("#facebookStatus").text(response.status);
+                if (response.status === 'connected') {
+                    $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
+                    var access_token = FB.getAuthResponse()['accessToken'];
                 }
-                else {
-                    if (imageUrl.slice(0, 4) != "http") {
-                        var http = "http://";
-                        var folder = String($("#folderLocation").val());
-                        console.log(folder);
-                        if (folder == "" || folder == "Newsletter") {
-                            imageUrl = http + "bethanyfowler-001-site2.btempurl.com/Content/Images/Newsletter/" + imageUrl;
-                        }
-                        else {
-                            imageUrl = http + "bethanyfowler-001-site2.btempurl.com/Content/Images/LatestNews/" + imageUrl;
-                        }
-                        console.log(imageUrl);
-                    }
+            })
+        };
 
-                    FB.api('/111357172747606/photos', 'post',
-                    {
-                        access_token: access_token,
-                        message: message,
-                        url: imageUrl
-                    },
-                    function (response) {
-                        if (!response || response.error) {
-                            $(".alert-danger").css("display", "block");
-                            $("#errorMessage").text("There was an error - unable to post to facebook.");
-                        } else {
-                            $(".alert-success").css("display", "block");
-                            $("#successMessage").text("Message successfully posted to facebook.");
-                        }
+        function postToFeed() {
+            var message = String($("#Message").val());
+            var imageUrl = String($("#Image").val());
+
+            if (imageUrl == "") {
+                FB.api('/111357172747606/feed', 'post',
+                {
+                    access_token: access_token,
+                    message: message
+                },
+                function (response) {
+                    if (!response || response.error) {
+                        $(".alert-danger").css("display", "block");
+                        $("#errorMessage").text("There was an error - unable to post to facebook.");
+                    } else {
+                        $(".alert-success").css("display", "block");
+                        $("#successMessage").text("Message successfully posted to facebook.");
                     }
-                )
                 }
+            )
             }
-        </script>
-    }
+            else {
+                if (imageUrl.slice(0, 4) != "http") {
+                    var http = "http://";
+                    var folder = String($("#Folder").val());
+                    console.log(folder);
+                    if (folder == "" || folder == "Newsletter") {
+                        //url needs to be changed in AccountsController line 86
+                        imageUrl = http + "bethanyfowler-001-site2.btempurl.com/Content/Images/Newsletter/" + imageUrl;
+                    }
+                    else {
+                        imageUrl = http + "bethanyfowler-001-site2.btempurl.com/Content/Images/LatestNews/" + imageUrl;
+                    }
+                    console.log(imageUrl);
+                }
+
+                FB.api('/111357172747606/photos', 'post',
+                {
+                    access_token: access_token,
+                    message: message,
+                    url: imageUrl
+                },
+                function (response) {
+                    if (!response || response.error) {
+                        $(".alert-danger").css("display", "block");
+                        $("#errorMessage").text("There was an error - unable to post to facebook.");
+                    } else {
+                        $(".alert-success").css("display", "block");
+                        $("#successMessage").text("Message successfully posted to facebook.");
+                    }
+                }
+            )
+            }
+        }
+    </script>
+}

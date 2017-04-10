@@ -14,5 +14,6 @@ namespace Bobs_Tyres.Models
         [DataType(DataType.MultilineText)]
         public string Message { get; set; }
         public string Image { get; set; }
+        public string Folder { get; set; }
     }
 }
