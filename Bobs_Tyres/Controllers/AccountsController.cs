@@ -31,16 +31,42 @@ namespace Bobs_Tyres.Controllers
         {
             return View();
         }
+        public ActionResult Unsubscribe(int? id)
+        {
+            if(id == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Unsubscribe([Bind(Include = "Email")] Subscriber subscriber)
+        {
+            return RedirectToAction("ConfirmMessage"); 
+        }
+
+        public ActionResult ConfirmMessage()
+        {
+            return View();
+        }
 
         public ActionResult Newsletter(string image, string message, string title, string error, string success)
         {
-            Newsletter newsletter = new Newsletter();
-            newsletter.Message = message;
-            newsletter.Title = title;
-            ViewBag.Image = image;
-            ViewBag.Error = error;
-            ViewBag.Success = success;
-            return View(newsletter);
+            if (SessionPersister.Username != null)
+            {
+                Newsletter newsletter = new Newsletter();
+                newsletter.Message = message;
+                newsletter.Title = title;
+                ViewBag.Image = image;
+                ViewBag.Error = error;
+                ViewBag.Success = success;
+                return View(newsletter);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -100,25 +126,29 @@ namespace Bobs_Tyres.Controllers
             }
 
             //send email
-            var body = "";
-            string messageBody = "";
-            if (!String.IsNullOrEmpty(newsletter.Image))
+            foreach(var subscriber in db.Subscribers)
             {
-                body = "<table style='text-align:center; margin: auto'><tr><th><img style='margin: auto; width:40%'src='http://bethanyfowler-001-site2.btempurl.com/Content/Images/logo.jpg'/></th></tr><tr><h1>Bobs Tyres and Garage Services Newsletter</h1></tr><tr><h2>{0}</h2></tr><tr><th><img style='width: 50%' src='{2}'></th></tr><tr><h3>{1}</h3></tr><tr><th>Call us on: <p>01460 72037<p></th></tr><tr><td>www.bobstyresltd.co.uk</td></tr><tr><td>Bobs Tyres Ltd, Blacknell Lane Trading Estate, Crewkerene, Somerset, TA18 7HE</td></tr></table>";
-                messageBody = string.Format(body, newsletter.Title.ToString(), newsletter.Message.ToString(), newsletter.Image);
-            }
-            else
-            {
-                body = "<table style='text-align:center; margin: auto'><tr><th><img style='margin: auto; width:40%'src='http://bethanyfowler-001-site2.btempurl.com/Content/Images/logo.jpg'/></th></tr><tr><h1>Bobs Tyres and Garage Services Newsletter</h1></tr><tr><h2>{0}</h2></tr><tr><h3>{1}</h3></tr><tr><th>Call us on: <p>01460 72037<p></th></tr><tr><td>www.bobstyresltd.co.uk</td></tr><tr><td>Bobs Tyres Ltd, Blacknell Lane Trading Estate, Crewkerene, Somerset, TA18 7HE</td></tr></table>";
-                messageBody = string.Format(body, newsletter.Title.ToString(), newsletter.Message.ToString());
-            }
-            
-            string to = "bethany.fowler14@gmail.com";
-            string from = "bobstyresandgarageservices@gmail.com";
-            string subject = "Bobs Tyres";
+                var body = "";
+                string messageBody = "";
+                if (!String.IsNullOrEmpty(newsletter.Image))
+                {
+                    body = "<table style='text-align:center; margin: auto'><tr><th><img style='margin: auto; width:40%'src='http://bethanyfowler-001-site2.btempurl.com/Content/Images/logo.jpg'/></th></tr><tr><h1>Bobs Tyres and Garage Services Newsletter</h1></tr><tr><h2>{0}</h2></tr><tr><th><img style='width: 50%' src='{2}'></th></tr><tr><h3>{1}</h3></tr><tr><th>Call us on: <p>01460 72037<p></th></tr><tr><td>www.bobstyresltd.co.uk</td></tr><tr><td>Bobs Tyres Ltd, Blacknell Lane Trading Estate, Crewkerene, Somerset, TA18 7HE</td></tr><tr><td><a href='http://bethanyfowler-001-site2.btempurl.com/Accounts/Unsubscribe/{3}'>Unsubscribe</a></td></tr></table>";
+                    messageBody = string.Format(body, newsletter.Title.ToString(), newsletter.Message.ToString(), newsletter.Image, subscriber.SubscriberID);
+                }
+                else
+                {
+                    body = "<table style='text-align:center; margin: auto'><tr><th><img style='margin: auto; width:40%'src='http://bethanyfowler-001-site2.btempurl.com/Content/Images/logo.jpg'/></th></tr><tr><h1>Bobs Tyres and Garage Services Newsletter</h1></tr><tr><h2>{0}</h2></tr><tr><h3>{1}</h3></tr><tr><th>Call us on: <p>01460 72037<p></th></tr><tr><td>www.bobstyresltd.co.uk</td></tr><tr><td>Bobs Tyres Ltd, Blacknell Lane Trading Estate, Crewkerene, Somerset, TA18 7HE</td></tr><tr><td><a href='http://bethanyfowler-001-site2.btempurl.com/Accounts/Unsubscribe/{3}'>Unsubscribe</a></td></tr></table>";
+                    messageBody = string.Format(body, newsletter.Title.ToString(), newsletter.Message.ToString(), subscriber.SubscriberID);
+                }
 
-            await SendMessage(to, from, messageBody, subject);
-            var success = "Newsletter successfully sent.";
+                string to = subscriber.Email;
+                string from = "bobstyresandgarageservices@gmail.com";
+                string subject = "Bobs Tyres";
+
+                await SendMessage(to, from, messageBody, subject);
+            }
+                        
+            var success = "Newsletter successfully sent to all subscribers.";
             return RedirectToAction("Newsletter", new { image = newsletter.Image, message = newsletter.Message, title = newsletter.Title, success = success });
         }
 

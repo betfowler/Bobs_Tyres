@@ -3,13 +3,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<ul class="nav nav-tabs">
-    <li class="active"><a href="@Url.Action("Home","Accounts")">Home</a></li>
-    <li><a href="@Url.Action("Index","LatestNews")">Latest News</a></li>
-    <li><a href="@Url.Action("AdminIndex","Reviews")">Testimonials</a></li>
-    <li><a href="@Url.Action("Newsletter","Accounts")">Newsletter</a></li>
-    <li style="float: right"><a href="@Url.Action("LogOut","Accounts")">Log Out</a></li>
-</ul>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li onclick="changeActiveTab('Home')" value="Home"><a href="@Url.Action("Home","Accounts")">Home</a></li>
+            <li onclick="changeActiveTab('LatestNews')" value="LatestNews"><a href="@Url.Action("Index","LatestNews")">Latest News</a></li>
+            <li onclick="changeActiveTab('Testimonials')" value="Testimonials"><a href="@Url.Action("AdminIndex","Reviews")">Testimonials</a></li>
+            <li onclick="changeActiveTab('Newsletter')" value="Newsletter"><a href="@Url.Action("Newsletter","Accounts")">Newsletter</a></li>
+        </ul>
+    </div>
+    <div class="floatRight" style="float: right">
+        <ul class="nav navbar-nav">
+            <li><a href="@Url.Action("LogOut","Accounts")">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
 
 <h2>@RenderSection("pageTitle", false)</h2>
 
