@@ -42,5 +42,18 @@ namespace Bobs_Tyres.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Contact([Bind(Include = "customerName,emailAddress,contactNumber,message,newsletter")] Contact contact)
+        {
+            if(contact.newsletter == true)
+            {
+                //add to subscribers list
+                ViewBag.Newsletter = "Yes please!!";
+            }
+            //send message to bobstyres@bobstyresltd.co.uk
+            return View();
+        }
+
     }
 }

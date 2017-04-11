@@ -33,24 +33,27 @@ namespace Bobs_Tyres.Controllers
         }
         public ActionResult Unsubscribe(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+            
             else
             {
-                return View();
+                Subscriber subscriber = db.Subscribers.Find(id);
+                if(subscriber == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                return View(subscriber);
             }
         }
-
-        [HttpPost]
-        public ActionResult Unsubscribe([Bind(Include = "Email")] Subscriber subscriber)
+        
+        public ActionResult ConfirmMessage(int id)
         {
-            return RedirectToAction("ConfirmMessage"); 
-        }
-
-        public ActionResult ConfirmMessage()
-        {
+            Subscriber subscriber = db.Subscribers.Find(id);
+            db.Subscribers.Remove(subscriber);
+            db.SaveChanges();
             return View();
         }
 
@@ -141,11 +144,28 @@ namespace Bobs_Tyres.Controllers
                     messageBody = string.Format(body, newsletter.Title.ToString(), newsletter.Message.ToString(), subscriber.SubscriberID);
                 }
 
-                string to = subscriber.Email;
-                string from = "bobstyresandgarageservices@gmail.com";
-                string subject = "Bobs Tyres";
+                //send email
+                var message = new MailMessage();
+                message.Body = messageBody;
+                message.To.Add(new MailAddress(subscriber.Email));
+                message.From = new MailAddress("bobstyresandgarageservices@gmail.com");
+                message.Subject = "Bobs Tyres Newsletter";
+                message.IsBodyHtml = true;
 
-                await SendMessage(to, from, messageBody, subject);
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "bobstyresandgarageservices@gmail.com",
+                        Password = "seryTB0bs"
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+
+                    await smtp.SendMailAsync(message);
+                }
             }
                         
             var success = "Newsletter successfully sent to all subscribers.";
