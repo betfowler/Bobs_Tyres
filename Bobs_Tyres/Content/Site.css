@@ -497,3 +497,56 @@ ol > li{
     cursor: default;
 }
 
+.conIcon{
+    font-size: 40px;
+    margin-bottom: 30px;
+}
+#faceconIcon{
+    margin: 30px;
+}
+#smlScreenImg{
+    display: none;
+}
+#subscriptionForm{
+    border-left: 2px solid #165121;
+}
+
+/*1200px - 992px*/
+@media screen and (max-width: 1200px){
+    h1{font-size: 30px;}
+    h2{font-size: 24px; margin-top: 10px;}
+    h3{ font-size: 18px;}
+    h4{ font-size: 16px;}
+    .totalRating{ font-size: 35px;}
+    .bannertext{ top: 160px; }
+    .infoBannerContent {top: 165px;}
+    .tyres{height: 25px;}
+    #weNeedImage{ min-height: 500px;}
+    .infoBannerContentHigher {top: 140px; left: 65px}
+    .conIcon {font-size: 35px; margin-bottom: 20px;}
+    #faceconIcon {margin: 20px;}
+    #boxDesc {height: 85px;}
+}
+
+/*991px - 768px*/
+@media screen and (max-width: 991px){
+    #locationBanner, #openingHrs{display: none;}
+    .bannertext {top: 140px;}
+    #boxTile {margin-bottom: 20px;}
+    #boxDesc {height: 50px;}
+    #secRow {margin-bottom: 20px;}
+    #lrgScreenImg{display: none;}
+    #smlScreenImg{display: block; margin-bottom: 20px;}
+    #smlScreenImg img{max-width: 100%; display: block;}
+    .infoBannerContent {width: 85%; top:140px}
+    .tyres{height: 35px;}
+    .infoBannerContentHigher{top: 410px; width: 83%}
+    #contactInformation{border-right: 1px solid white;}
+    #subscriptionForm{border-left: none; border-top: 2px solid #165121;}
+}
+
+/*768px -*/
+@media screen and (max-width: 768px){
+    #bannerTitle, #contactNumber{text-align: center;}
+    .body-content {padding-top: 200px;}
+}

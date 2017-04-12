@@ -8,7 +8,13 @@
         <h4>@RenderSection("pageBody", false)</h4>
     </div>
     <div class="col-md-5" id="infoLongBanner">
-        <img src="../Content/Images/TallBanner.png"/>
+        <div id="lrgScreenImg">
+            <img src="~/Content/Images/TallBanner.png" />
+        </div>
+        <div id="smlScreenImg">
+            <img id="smlScreenImg" src="~/Content/Images/LongBanner.png" />
+        </div>
+
         <div class="infoBannerContent">
             <h3>@RenderSection("bannerTop", false)</h3>
             <h2>01460 72037</h2>
@@ -22,4 +28,3 @@
         </div>
     </div>
 </div>
-

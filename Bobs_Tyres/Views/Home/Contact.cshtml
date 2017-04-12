@@ -10,48 +10,95 @@
     }
 }
 
+<script>
+    var recaptcha1;
+    var recaptcha2;
+
+    var myCallBack = function () {
+        recaptcha1 = grecaptcha.render('recaptcha1', {
+            'sitekey': '6LdquhwUAAAAAN9IEqlL-Z_H9kbPVTQYG38wFXWD',
+            'theme': 'light'
+        });
+
+        recaptcha2 = grecaptcha.render('recaptcha2', {
+            'sitekey': '6LdquhwUAAAAAN9IEqlL-Z_H9kbPVTQYG38wFXWD',
+            'theme': 'light'
+        })
+    };
+</script>
 
 <h1 style="text-align: center; color: #165121; padding-bottom: 20px;">Contact Us</h1>
 <div class="row">
-    <div class="col-md-4" id="contactInformation">
-        <img src="~/Content/Images/SmlBanner.png" />
+    <div id="smlScreenImg">
+        <img id="smlScreenImg" src="~/Content/Images/LongBanner.png" />
         <div class="infoBannerContentHigher">
-            <i class="fa fa-map-marker" style="font-size: 40px; margin-bottom: 30px;" aria-hidden="true"></i>
-            <h4>
-                <p>Bobs Tyres Ltd</p>
-                <p>Blacknell Lane Trading Estate</p>
-                <p>Crewkerne</p>
-                <p>Somerset</p>
-                <p>TA18 7HE</p>
-            </h4>
+            <div class="col-sm-4" id="contactInformation">
+                <i class="fa fa-map-marker conIcon" aria-hidden="true"></i>
+                <h4>
+                    <p>Bobs Tyres Ltd</p>
+                    <p>Blacknell Lane Trading Estate</p>
+                    <p>Crewkerne</p>
+                    <p>Somerset</p>
+                    <p>TA18 7HE</p>
+                </h4>
+            </div>
+            <div class="col-sm-4" id="contactInformation">
+                <i class="fa fa-calendar conIcon" aria-hidden="true"></i>
+                <h3>Monday - Friday</h3>
+                <h3>08.30 - 17.30</h3>
+                <h3>Saturday</h3>
+                <h3>08.30 - 12.00</h3>
+            </div>
+            <div class="col-sm-4" id="contactInformationLast">
+                <i class="fa fa-phone conIcon" aria-hidden="true"></i>
+                <h2>01460 72037</h2>
+                <br />
+                <h5><i class="fa fa-envelope" aria-hidden="true"></i> bobstyres@bobstyresltd.co.uk</h5>
+                <i class="fa fa-facebook-square conIcon" id="faceconIcon" aria-hidden="true"></i>
+            </div>
         </div>
     </div>
-    <div class="col-md-4" id="contactInformation">
-        <img src="~/Content/Images/SmlBanner.png" />
-        <div class="infoBannerContentHigher">
-            <i class="fa fa-calendar" style="font-size: 40px; margin-bottom: 30px;" aria-hidden="true"></i>
-            <h3>Monday - Friday</h3>
-            <h3>08.30 - 17.30</h3>
-            <h3>Saturday</h3>
-            <h3>08.30 - 12.00</h3>
+    <div id="lrgScreenImg">
+        <div class="col-sm-4" id="contactInformation">
+            <img src="~/Content/Images/SmlBanner.png" />
+            <div class="infoBannerContentHigher">
+                <i class="fa fa-map-marker conIcon" aria-hidden="true"></i>
+                <h4>
+                    <p>Bobs Tyres Ltd</p>
+                    <p>Blacknell Lane Trading Estate</p>
+                    <p>Crewkerne</p>
+                    <p>Somerset</p>
+                    <p>TA18 7HE</p>
+                </h4>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4" id="contactInformation">
-        <img src="~/Content/Images/SmlBanner.png" />
-        <div class="infoBannerContentHigher">
-            <i class="fa fa-phone" style="font-size: 40px; margin-bottom: 30px;" aria-hidden="true"></i>
-            <h2>01460 72037</h2>
-            <br />
-            <h5><i class="fa fa-envelope" aria-hidden="true"></i> bobstyres@bobstyresltd.co.uk</h5>
-            <i class="fa fa-facebook-square" style="font-size: 40px; margin: 30px;" aria-hidden="true"></i>
+        <div class="col-sm-4" id="contactInformation">
+            <img src="~/Content/Images/SmlBanner.png" />
+            <div class="infoBannerContentHigher">
+                <i class="fa fa-calendar conIcon" aria-hidden="true"></i>
+                <h3>Monday - Friday</h3>
+                <h3>08.30 - 17.30</h3>
+                <h3>Saturday</h3>
+                <h3>08.30 - 12.00</h3>
+            </div>
+        </div>
+        <div class="col-sm-4" id="contactInformation">
+            <img src="~/Content/Images/SmlBanner.png" />
+            <div class="infoBannerContentHigher">
+                <i class="fa fa-phone conIcon" aria-hidden="true"></i>
+                <h2>01460 72037</h2>
+                <br />
+                <h5><i class="fa fa-envelope" aria-hidden="true"></i> bobstyres@bobstyresltd.co.uk</h5>
+                <i class="fa fa-facebook-square conIcon" id="faceconIcon" aria-hidden="true"></i>
+            </div>
         </div>
     </div>
 </div>
 <div class="row" id="break"></div>
 <div class="row" id="break"></div>
 <div class="row">
-    <div class="col-md-7">
-        <h4 style="text-align: center">Complete the form below to submit an email enquiry</h4>
+    <div class="col-md-offset-1 col-md-5">
+        <h3 style="text-align: center">Complete the form below to submit an email enquiry</h3>
     @using (Html.BeginForm("Contact","Home", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
@@ -93,8 +140,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-4 col-md-8">
-                        <div class="g-recaptcha" data-sitekey="6LdquhwUAAAAAN9IEqlL-Z_H9kbPVTQYG38wFXWD"></div>
+                    <div class="col-lg-offset-4 col-lg-8 col-md-offset-2">
+                        <div id="recaptcha1"></div>
                         <div>
                             @if (TempData["recaptcha"] != null)
                             {
@@ -113,17 +160,30 @@
         </div>
     }
     </div>
-    <div class="col-md-5" style="background-color:#ccc">
+    <div class="col-md-offset-1 col-md-5" id="subscriptionForm">
 
-        @using (Html.BeginForm("Subscriber","Accounts", FormMethod.Post))
+        @using (Html.BeginForm("Subscribe","Accounts", FormMethod.Post))
         {
-            <h4 style="text-align: center">Subscribe to our newsletter</h4>
+            <h3 style="text-align: center">Subscribe to our newsletter</h3>
+            <h5 style="text-align: center">Sign up today to receive our newsletter and keep up to date with our latest news and offers</h5>
             <div class="form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(model => model.subscriber.Email, htmlAttributes: new { @class = "control-label col-md-4 " })
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.subscriber.Email, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.subscriber.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-4 col-lg-8 col-md-offset-2">
+                        <div id="recaptcha2"></div>
+                        <div>
+                            @if (TempData["recaptcha"] != null)
+                            {
+                                <p style="color: red"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> @TempData["recaptcha"]</p>
+                            }
+                        </div>
                     </div>
                 </div>
 

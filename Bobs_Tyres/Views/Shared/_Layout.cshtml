@@ -8,16 +8,16 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="https://fonts.googleapis.com/css?family=Kalam" rel="stylesheet">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js?onload=myCallBack&render=explicit' async defer></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navtop">
             <div class="row" id="navtopContainer">
-                <div class="col-md-5">
+                <div class="col-lg-5 col-md-4 col-sm-5">
                     <a href="@Url.Action("Index", "Home")"><img src="~/Content/Images/logo.jpg" /></a>
                 </div>
-                <div class="col-md-7">
+                <div class="col-lg-7 col-md-8 col-sm-7">
                     <div class="row" id="contactInfomationGroup">
                         <div class="col-md-4">
                             <div class="row" id="contactBanner">

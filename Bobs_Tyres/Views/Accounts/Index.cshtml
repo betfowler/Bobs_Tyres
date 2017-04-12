@@ -21,23 +21,26 @@
                 @ViewBag.Error
                 <h4>Log in here</h4>
                 <hr />
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Account.Username, new { @class = "col-md-2 control-label"})
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.Account.Username)
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Account.Username, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Account.Username, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Account.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(model => model.Account.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Login" class="btn btn-default" />
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Account.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(model => model.Account.Password)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Login" class="btn btn-default" />
-                    </div>
-                </div>
+                
             }
         </section>
     </div>
