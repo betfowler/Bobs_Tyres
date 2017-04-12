@@ -73,6 +73,22 @@ namespace Bobs_Tyres.Controllers
         }
 
         [HttpPost]
+        public ActionResult Subscribe([Bind(Include = "Email")] Subscriber subscriber)
+        {
+            if (db.Subscribers.Where(s => s.Email.Equals(subscriber.Email)).FirstOrDefault() == null)
+            {
+                db.Subscribers.Add(subscriber);
+                db.SaveChanges();
+                return RedirectToAction("Contact", new { message = "You are now signed up to receive our newsletter" });
+            }
+            else
+            {
+                return RedirectToAction("Contact", new { message = "Your email address is already registered to receive our newsletter" });
+            }
+            return RedirectToAction("Contact");
+        }
+
+        [HttpPost]
         public JsonResult AjaxRemoveImage (string imageName)
         {
             var path = HttpContext.Server.MapPath("/Content/Images/Newsletter/" + imageName);

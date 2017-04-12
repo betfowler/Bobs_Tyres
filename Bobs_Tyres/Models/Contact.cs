@@ -22,6 +22,7 @@ namespace Bobs_Tyres.Models
         [Display(Name = "Enquiry")]
         [DataType(DataType.MultilineText)]
         public string message { get; set; }
+        public bool newsletter { get; set; }
     }
     public class ContactValidator : AbstractValidator<Contact>
     {

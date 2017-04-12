@@ -1,14 +1,11 @@
 ﻿@model Bobs_Tyres.Models.Subscriber
-
-
-@using (Html.BeginForm())
-{
-    <div class="row">
-        <h1>You want to unsubscribe to our newsletters?</h1>
-        <h3>Email Address: @Model.Email</h3>
-
-        @Html.ActionLink("Return to homepage", "Index", "Home", null, new { @class = "btn btn-primary" })
-        <input type="submit" value="Yes, please unsubscribe me" class="btn btn-danger" />
-    </div>
-
+@{
+    ViewBag.Title = "Unsubscribe Newsletter | Bobs Tyres Ltd";
 }
+<div class="row">
+    <h1>You want to unsubscribe to our newsletters?</h1>
+    <h3>Email Address: @Model.Email</h3>
+
+    @Html.ActionLink("Return to homepage", "Index", "Home", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Yes, please unsubscribe me", "ConfirmMessage", "Accounts", new { id = Model.SubscriberID}, new { @class = "btn btn-danger" })
+</div>

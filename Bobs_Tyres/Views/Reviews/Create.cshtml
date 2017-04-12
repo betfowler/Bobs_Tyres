@@ -1,7 +1,7 @@
 ﻿@model Bobs_Tyres.Models.Review
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Testimonial | Bobs Tyres Ltd";
 }
 
 <h2>Add Your Testimonial</h2>
@@ -53,6 +53,20 @@
                 @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="g-recaptcha" data-sitekey="6LdquhwUAAAAAN9IEqlL-Z_H9kbPVTQYG38wFXWD"></div>
+                <div>
+                    @if (TempData["recaptcha"] != null)
+                    {
+                        <p style="color: red"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> @TempData["recaptcha"]</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

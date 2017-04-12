@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -36,23 +38,67 @@ namespace Bobs_Tyres.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact(string message)
         {
-            ViewBag.Message = "Your contact page.";
+            if (!String.IsNullOrEmpty(message))
+            {
+                ViewBag.Success = message;
+            }
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult Contact([Bind(Include = "customerName,emailAddress,contactNumber,message,newsletter")] Contact contact)
+        [ValidateAntiForgeryToken]
+        public async System.Threading.Tasks.Task<ActionResult> Contact([Bind(Include = "customerName,emailAddress,contactNumber,message,newsletter")] Contact contact)
         {
-            if(contact.newsletter == true)
+            if (ModelState.IsValid)
             {
-                //add to subscribers list
-                ViewBag.Newsletter = "Yes please!!";
+                string EncodedResponse = Request.Form["g-Recaptcha-Response"];
+                bool IsCaptchaValid = (ReCaptcha.Validate(EncodedResponse) == "True" ? true : false);
+                if (IsCaptchaValid)
+                {
+                    if (contact.newsletter == true)
+                    {
+                        if (db.Subscribers.Where(s => s.Email.Equals(contact.emailAddress)).FirstOrDefault() == null)
+                        {
+                            Subscriber subscriber = new Subscriber();
+                            subscriber.Email = contact.emailAddress;
+                            db.Subscribers.Add(subscriber);
+                            db.SaveChanges();
+                        }
+                    }
+
+                    //send email
+                    var body = "<p><b>Name:</b> {0}</p><p><b>Email address:</b> {1}</p><p><b>Contact number:</b> {2}</p><p><b>Enquiry:</b> {3}</p>";
+                    string messageBody = string.Format(body, contact.customerName.ToString(), contact.emailAddress.ToString(), contact.contactNumber.ToString(), contact.message.ToString());
+
+                    //send email
+                    var message = new MailMessage();
+                    message.Body = messageBody;
+                    message.To.Add(new MailAddress("bethany.fowler14@gmail.com"));
+                    message.From = new MailAddress("bobstyresandgarageservices@gmail.com");
+                    message.Subject = "Bobs Tyres Online Enquiry";
+                    message.IsBodyHtml = true;
+
+                    using (var smtp = new SmtpClient())
+                    {
+                        var credential = new NetworkCredential
+                        {
+                            UserName = "bobstyresandgarageservices@gmail.com",
+                            Password = "seryTB0bs"
+                        };
+                        smtp.Credentials = credential;
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Port = 587;
+                        smtp.EnableSsl = true;
+
+                        await smtp.SendMailAsync(message);
+                    }
+                    return RedirectToAction("Contact", new { message = "Your message has been sent to Bobs Tyres" });
+                }
             }
-            //send message to bobstyres@bobstyresltd.co.uk
-            return View();
+            return View(contact);
         }
 
     }

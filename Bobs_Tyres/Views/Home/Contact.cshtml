@@ -1,7 +1,16 @@
-﻿@model Bobs_Tyres.Models.Contact
+﻿@model Bobs_Tyres.ViewModels.ContactViewModel
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact Us | Bobs Tyres";
+     
+    if (ViewBag.Success != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> @ViewBag.Success
+        </div>
+    }
 }
+
+
 <h1 style="text-align: center; color: #165121; padding-bottom: 20px;">Contact Us</h1>
 <div class="row">
     <div class="col-md-4" id="contactInformation">
@@ -42,60 +51,61 @@
 <div class="row" id="break"></div>
 <div class="row">
     <div class="col-md-7">
-        <h4>Complete the form below to submit an email enquiry</h4>
-    @using (Html.BeginForm())
+        <h4 style="text-align: center">Complete the form below to submit an email enquiry</h4>
+    @using (Html.BeginForm("Contact","Home", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="contactform">
             <div class="form-horizontal">
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.customerName, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    @Html.LabelFor(model => model.contact.customerName, htmlAttributes: new { @class = "control-label col-md-4 " })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.customerName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.customerName, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.contact.customerName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.contact.customerName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.emailAddress, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    @Html.LabelFor(model => model.contact.emailAddress, htmlAttributes: new { @class = "control-label col-md-4 " })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.emailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.emailAddress, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.contact.emailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.contact.emailAddress, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.contactNumber, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    @Html.LabelFor(model => model.contact.contactNumber, htmlAttributes: new { @class = "control-label col-md-4 " })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.contactNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.contactNumber, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.contact.contactNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.contact.contactNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.message, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    @Html.LabelFor(model => model.contact.message, htmlAttributes: new { @class = "control-label col-md-4 " })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.message, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.contact.message, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.contact.message, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-4">Subscribe to our newsletter</label>
                     <div class="col-md-8">
-                        @Html.CheckBoxFor(model => model.newsletter)
+                        @Html.CheckBoxFor(model => model.contact.newsletter)
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="6LfXoRgUAAAAAEFHvieZAPLqY74vzREiI0vVzbxB"></div>
-                    <div>
-                        @if (TempData["recaptcha"] != null)
-                        {
-                            <p style="color: red"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> @TempData["recaptcha"]</p>
-                        }
+                    <div class="col-md-offset-4 col-md-8">
+                        <div class="g-recaptcha" data-sitekey="6LdquhwUAAAAAN9IEqlL-Z_H9kbPVTQYG38wFXWD"></div>
+                        <div>
+                            @if (TempData["recaptcha"] != null)
+                            {
+                                <p style="color: red"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> @TempData["recaptcha"]</p>
+                            }
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-offset-4 col-md-8">
                         <input type="submit" value="Submit" class="btn btn-default" />
                     </div>
                 </div>
@@ -103,7 +113,31 @@
         </div>
     }
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5" style="background-color:#ccc">
+
+        @using (Html.BeginForm("Subscriber","Accounts", FormMethod.Post))
+        {
+            <h4 style="text-align: center">Subscribe to our newsletter</h4>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.subscriber.Email, htmlAttributes: new { @class = "control-label col-md-4 " })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.subscriber.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.subscriber.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <div id="googleMap" style="width: 100%; height: 300px"></div>
     </div>
 </div>

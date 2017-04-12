@@ -53,7 +53,7 @@ namespace Bobs_Tyres.Controllers
                 db.Reviews.Add(review);
                 db.SaveChanges();
                 var success = "Your testimonial has been created and is now awaiting approval from our admin.";
-                return RedirectToAction("Index","Home", new { message = success});
+                return RedirectToAction("Index", "Home", new { message = success });
             }
 
             return View(review);
