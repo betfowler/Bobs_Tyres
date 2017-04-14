@@ -16,13 +16,24 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <div class="bannerImg">
-            <img size="(max-width: 1920px) 100vw, 1920px" src="~/Content/Images/LongBanner.png" />
+            <div class="largeScreenSize">
+                <img size="(max-width: 1920px) 100vw, 1920px" src="~/Content/Images/LongBanner.png" />
+            </div>
+            <div class="xsScreenSize">
+                <img src="~/Content/Images/TallBanner.png" />
+            </div>
             <div class="bannertext">
                 <h1 id="googleText">Welcome to Bobs Tyres & Garage Services</h1>
                 <h3>With over 80 years combined experience our technicians can service, maintain and repair all makes of car and light commercial vehicle.</h3>
                 <h3>Whether you have a puncture, an annoying little rattle or need a full service including timing belt we have the facilities and qualified staff to help.</h3>
                 <h2 id="googleText">We're not just tyres!</h2>
                 <h4 class="familyText">A family, friendly service you can trust.</h4>
+                <div id="smlContact">
+                    <p style="color: #ccc;"><i>Give Us A Call On</i></p>
+                    <div class="row" id="contactNumber">
+                        <i class="fa fa-phone" aria-hidden="true"></i> 01460 72037
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -185,10 +196,10 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-xs-3">
                             <h2 style="text-align: right" id="reviewaverage">@ViewBag.ReviewAverage</h2>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-xs-9">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="totalRating">
@@ -212,7 +223,7 @@
                     @Html.ActionLink("Write a review", "Create", "Reviews", null, new { @class = "btn btn-default", id="reviewbutton" })
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-xs-12">
                 <div class="testimonialList">
                     @foreach (var item in ViewBag.Reviews)
                     {
@@ -270,10 +281,10 @@
     <div class="col-md-6">
         <div class="col-md-12" id="thirdRow">
             <div class="row">
-                <div class="col-sm-5" id="wheelsonFace">
+                <div class="col-xs-5" id="wheelsonFace">
                     <img src="../Content/Images/WheelsonCartoonFace.png" />
                 </div>
-                <div class="col-sm-7">
+                <div class="col-xs-7">
                     <blockquote class="rectangle-speech-border">
                         <h2>Hi, my name is Wheelson</h2>
                         <h4>Find me outside the garage and 'check me out' for our latest offers</h4>

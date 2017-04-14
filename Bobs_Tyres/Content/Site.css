@@ -510,6 +510,7 @@ ol > li{
 #subscriptionForm{
     border-left: 2px solid #165121;
 }
+.xsScreenSize, #smlLogo, #smlContact, #xsmlScreenImg, #smlScreenContact {display: none;}
 
 /*1200px - 992px*/
 @media screen and (max-width: 1200px){
@@ -543,10 +544,41 @@ ol > li{
     .infoBannerContentHigher{top: 410px; width: 83%}
     #contactInformation{border-right: 1px solid white;}
     #subscriptionForm{border-left: none; border-top: 2px solid #165121;}
+    #smlScreenContact {display: block;}
 }
 
 /*768px -*/
 @media screen and (max-width: 768px){
     #bannerTitle, #contactNumber{text-align: center;}
-    .body-content {padding-top: 200px;}
+    .body-content {padding-top: 20px;}
+    .largeScreenSize {display: none;}
+    .xsScreenSize {display: block;}
+    h1{font-size: 24px; }
+    h3{ font-size: 16px;}
+    .bannertext {top: 200px; width: 260px; left: 14%;}
+    .navtop{display: none;}
+    .navbar-header{background-color: white; }
+    .navbar-inverse .navbar-toggle {border-color: #165121;}
+    .navbar-inverse .navbar-toggle .icon-bar {background-color: #165121;}
+    #smlLogo{display: block; height: 44px; margin: 5px;}
+    #smlLogo img{height: 100%;}
+    #smlContact {display: block;}
+    #newsDescription {height: 65px; width: 265px; margin-left: 2px;}
+    #findoutmore {padding-top: 15px;}
+    .prev, .next {font-size: 30px; top: 97%;}
+    #reviewbutton {margin-bottom: 15px;}
+    .testimonialList {height: 320px;}
+    #wheelsonFace img {max-width: 100%;}
+    .rectangle-speech-border {padding: 10px 10px;}
+    #smlScreenImg{display: none;}
+    #xsmlScreenImg{display: block;}
+    #xsmlScreenImg img {margin: auto; }
+    .infoBannerContent {width: 60%; left: 20%; top: 120px;}
+    .tyres {height: 13px; margin-top: 20px; margin-bottom: 20px;}
+    .pdflinks img, #kumhoImage img, .kumhoTitle img {width: 90%;}
+    #exhaustImages img {width: 70%;}
+    #exhaustImages .col-sm-4 {margin-left: 15%;}
+    .infoBannerContentHigher{color: black; top: 150px; left:0px; width: 100%;}
+    #contactRow {margin-top: 640px;}
+    #contactInformation, #contactInformationLast {border-bottom: 2px solid #165121; padding: 5px; }
 }

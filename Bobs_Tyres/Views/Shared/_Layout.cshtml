@@ -14,7 +14,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navtop">
             <div class="row" id="navtopContainer">
-                <div class="col-lg-5 col-md-4 col-sm-5">
+                <div class="col-lg-5 col-md-4 col-sm-5" id="logoImage">
                     <a href="@Url.Action("Index", "Home")"><img src="~/Content/Images/logo.jpg" /></a>
                 </div>
                 <div class="col-lg-7 col-md-8 col-sm-7">
@@ -53,6 +53,9 @@
         </div>
         <div class="container">
             <div class="navbar-header">
+                <p class="navbar-text visible-xs-inline-block" id="smlLogo">
+                    &nbsp; <a href="@Url.Action("Index", "Home")"><img src="~/Content/Images/logo.jpg" /></a>
+                </p>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
