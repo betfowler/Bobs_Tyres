@@ -14,6 +14,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -73,25 +74,82 @@ namespace Bobs_Tyres.Controllers
         }
 
         [HttpPost]
-        public ActionResult Subscribe([Bind(Include = "Email")] Subscriber subscriber)
+        public async Task<ActionResult> Subscribe([Bind(Include = "Email")] Subscriber subscriber)
         {
-            string EncodedResponse = Request.Form["g-Recaptcha-Response"];
-            bool IsCaptchaValid = (ReCaptcha.Validate(EncodedResponse) == "True" ? true : false);
-            if (IsCaptchaValid)
+            string EncodedResponse = Request["g-recaptcha-response"];
+            var client = new WebClient();
+            string PrivateKey = "6LeHVh0UAAAAAFHTfzxLL8LSFhmT27ZawwG9Oxbb";
+            var reply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", PrivateKey, EncodedResponse));
+            JObject jobject = JObject.Parse(reply);
+            var captchaResponse = (bool)jobject["success"];
+
+            if (String.IsNullOrEmpty(subscriber.Email))
             {
-                if (db.Subscribers.Where(s => s.Email.Equals(subscriber.Email)).FirstOrDefault() == null)
+                return RedirectToAction("Contact", "Home");
+            }
+            if (captchaResponse != true)
+            {
+                var errormessages = jobject["error-codes"].ToArray();
+                foreach (var m in errormessages)
                 {
-                    db.Subscribers.Add(subscriber);
-                    db.SaveChanges();
-                    return RedirectToAction("Contact", new { message = "You are now signed up to receive our newsletter" });
-                }
-                else
-                {
-                    return RedirectToAction("Contact", new { message = "Your email address is already registered to receive our newsletter" });
+                    if (m.ToString() == "missing-input-secret" || m.ToString() == "invalid-input-secret")
+                    {
+                        //send email
+                        var errorbody = "<h1>Bobs Tyres Ltd ReCaptcha Error</h1><h3>The following recaptcha error has occured: <b>{0}</b>";
+                        string errorMessage = string.Format(errorbody, m.ToString());
+                        var adminTo = "bethany.fowler14@gmail.com";
+
+                        if (await SendMail(errorMessage, adminTo))
+                        {
+                            return View();
+                        }
+
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
             }
-            return RedirectToAction("Contact");
+            if (db.Subscribers.Where(s => s.Email.Equals(subscriber.Email)).FirstOrDefault() == null)
+            {
+                db.Subscribers.Add(subscriber);
+                db.SaveChanges();
+                return RedirectToAction("Contact", "Home", new { message = "You are now signed up to receive our newsletter" });
+            }
+            else
+            {
+                return RedirectToAction("Contact", "Home", new { message = "Your email address is already registered to receive our newsletter" });
+            }
         }
+
+        public async Task<bool> SendMail(string messageBody, string to)
+        {
+            //send email
+            var message = new MailMessage();
+            message.Body = messageBody;
+            message.To.Add(new MailAddress(to));
+            message.From = new MailAddress("bobstyresandgarageservices@gmail.com");
+            message.Subject = "Bobs Tyres Online Enquiry";
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                var credential = new NetworkCredential
+                {
+                    UserName = "bobstyresandgarageservices@gmail.com",
+                    Password = "seryTB0bs"
+                };
+                smtp.Credentials = credential;
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+
+                await smtp.SendMailAsync(message);
+            }
+            return true;
+        }
+
 
         [HttpPost]
         public JsonResult AjaxRemoveImage (string imageName)
@@ -168,7 +226,7 @@ namespace Bobs_Tyres.Controllers
                 //send email
                 var message = new MailMessage();
                 message.Body = messageBody;
-                message.To.Add(new MailAddress(subscriber.Email));
+                message.To.Add(new MailAddress(subscriber.Email, "bethany.fowler14@gmail.com"));
                 message.From = new MailAddress("bobstyresandgarageservices@gmail.com");
                 message.Subject = "Bobs Tyres Newsletter";
                 message.IsBodyHtml = true;

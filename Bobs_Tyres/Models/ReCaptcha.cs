@@ -2,34 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Bobs_Tyres.Models
 {
-    public class ReCaptcha
+    public class ReCaptchaClass
     {
-        private string m_Success;
-        [JsonProperty("success")]
-        public string Success
+        public string success { get; set; }
+
+        public string Validate(string EncodedResponse)
         {
-            get { return m_Success; }
-            set { m_Success = value; }
-        }
-        private List<string> m_ErrorCodes;
-        [JsonProperty("error-codes")]
-        public List<string> ErrorCodes
-        {
-            get { return m_ErrorCodes; }
-            set { m_ErrorCodes = value; }
+            var client = new WebClient();
+            string PrivateKey = "6LeHVh0UAAAAAFHTfzxLL8LSFhmT27ZawwG9Oxbb";
+            var reply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", PrivateKey, EncodedResponse));
+            JObject jobject = JObject.Parse(reply);
+            success = (string)jobject["success"];
+            //var captchaResponse = JsonConvert.DeserializeObject<ReCaptchaClass>(reply);
+            return success;
         }
 
-        public static string Validate(string EncodedResponse)
-        {
-            var client = new System.Net.WebClient();
-            string PrivateKey = "6LdquhwUAAAAAEtuekGNj5eQqPPqs6IHVRm_G4Rb";
-            var reply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", PrivateKey, EncodedResponse));
-            var captchaResponse = JsonConvert.DeserializeObject<ReCaptcha>(reply);
-            return captchaResponse.Success;
-        }
+        
     }
 }

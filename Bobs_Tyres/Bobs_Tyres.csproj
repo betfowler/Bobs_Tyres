@@ -93,8 +93,8 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Recaptcha.MVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RecaptchaMVC.1.0.1.0\lib\net45\Recaptcha.MVC.dll</HintPath>
+    <Reference Include="reCAPTCHA.MVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\reCAPTCH.MVC.1.0.1\lib\net45\reCAPTCHA.MVC.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -279,7 +279,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="RecaptchaNet.Readme.txt" />
     <Content Include="Scripts\bobsjQuery.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -293,7 +292,6 @@
     <Content Include="Content\Files\Service-Schedule.pdf" />
     <Content Include="Content\Files\Service-Price-List.pdf" />
     <Content Include="Scripts\ContactReCaptcha.js" />
-    <Content Include="_nuget\nuget.exe" />
     <None Include="Properties\PublishProfiles\BobsTyres.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -308,7 +306,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sliderJQuery.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

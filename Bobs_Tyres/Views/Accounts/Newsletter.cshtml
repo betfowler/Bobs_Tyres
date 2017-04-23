@@ -159,7 +159,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <a onclick="postToFeed(); return false;" class="btn btn-info" id="facebookButton"><i class="fa fa-facebook" aria-hidden="true"></i> Post To Facebook</a>
-                    <button name="action:Send" type="submit" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send Newsletter</button>
+                    <button name="action:Send" type="submit" id="newsletterSend" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send Newsletter</button>
                     <a onclick="resetNewsletter()" class="btn btn-default">Reset</a>
                 </div>
             </div>
@@ -193,6 +193,10 @@
         };
 
         function postToFeed() {
+            $("#facebookButton").css({ 'pointer-events': 'none', 'cursor': 'default' });
+            $("#facebookButton").html("Posting - please wait");
+            $("#newsletterSend").prop('disabled', true);
+
             var message = String($("#Message").val());
             var imageUrl = String($("#Image").val());
 
@@ -203,9 +207,13 @@
                     message: message
                 },
                 function (response) {
+                    $("#newsletterSend").prop('disabled', false);
+                    $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
+                    $("#facebookButton").html('<i class="fa fa-facebook" aria-hidden="true"></i> Post To Facebook');
                     if (!response || response.error) {
                         $(".alert-danger").css("display", "block");
                         $("#errorMessage").text("There was an error - unable to post to facebook.");
+                        
                     } else {
                         $(".alert-success").css("display", "block");
                         $("#successMessage").text("Message successfully posted to facebook.");
@@ -235,6 +243,9 @@
                     url: imageUrl
                 },
                 function (response) {
+                    $("#newsletterSend").prop('disabled', false);
+                    $("#facebookButton").css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
+                    $("#facebookButton").html('<i class="fa fa-facebook" aria-hidden="true"></i> Post To Facebook');
                     if (!response || response.error) {
                         $(".alert-danger").css("display", "block");
                         $("#errorMessage").text("There was an error - unable to post to facebook.");

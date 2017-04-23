@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bobs_Tyres.Models;
 using Bobs_Tyres.Security;
+using Newtonsoft.Json.Linq;
 
 namespace Bobs_Tyres.Controllers
 {
@@ -44,16 +45,51 @@ namespace Bobs_Tyres.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReviewID,Name,Date,Rating,Testimonial,Location,StatusID")] Review review)
+        public async System.Threading.Tasks.Task<ActionResult> Create([Bind(Include = "ReviewID,Name,Date,Rating,Testimonial,Location,StatusID")] Review review)
         {
+
             if (ModelState.IsValid)
             {
+                string EncodedResponse = Request["g-recaptcha-response"];
+                var client = new WebClient();
+                string PrivateKey = "6LeHVh0UAAAAAFHTfzxLL8LSFhmT27ZawwG9Oxbb";
+                var reply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", PrivateKey, EncodedResponse));
+                JObject jobject = JObject.Parse(reply);
+                var captchaResponse = (bool)jobject["success"];
+
+                if (captchaResponse != true)
+                {
+                    var errormessages = jobject["error-codes"].ToArray();
+                    foreach (var m in errormessages)
+                    {
+                        if (m.ToString() == "missing-input-secret" || m.ToString() == "invalid-input-secret")
+                        {
+                            //send email
+                            var errorbody = "<h1>Bobs Tyres Ltd ReCaptcha Error</h1><h3>The following recaptcha error has occured: <b>{0}</b>";
+                            string errorMessage = string.Format(errorbody, m.ToString());
+                            var adminTo = "bethany.fowler14@gmail.com";
+
+                            /*if (await SendMail(errorMessage, adminTo))
+                            {
+                                return View();
+                            }*/
+                            return View();
+                        }
+                        else
+                        {
+                            ViewBag.CaptchaErrorMessage = "An error occured.  Please try again ensuring that the security box is ticked.";
+                            return View();
+                        }
+                    }
+                }
+
                 review.StatusID = 1;
                 review.Date = DateTime.Now;
                 db.Reviews.Add(review);
                 db.SaveChanges();
                 var success = "Your testimonial has been created and is now awaiting approval from our admin.";
                 return RedirectToAction("Index", "Home", new { message = success });
+
             }
 
             return View(review);
@@ -83,10 +119,11 @@ namespace Bobs_Tyres.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReviewID,Name,Date,Rating,Testimonial,Location")] Review review)
+        public ActionResult Edit([Bind(Include = "ReviewID,Name,Date,Rating,Testimonial,Location,StatusID")] Review review)
         {
             if (ModelState.IsValid)
             {
+                var test = review.StatusID;
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("AdminIndex");

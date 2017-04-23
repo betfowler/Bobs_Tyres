@@ -19,6 +19,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ReviewID)
             @Html.HiddenFor(model => model.Date)
+            @Html.HiddenFor(model => model.StatusID)
 
             @{
                 if (Model.StatusID == 1)

@@ -56,17 +56,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <div class="g-recaptcha" data-sitekey="6LdquhwUAAAAAN9IEqlL-Z_H9kbPVTQYG38wFXWD"></div>
-                <div>
-                    @if (TempData["recaptcha"] != null)
-                    {
-                        <p style="color: red"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> @TempData["recaptcha"]</p>
-                    }
-                </div>
+                <div id="recaptcha3"></div>
+                <div class="text-danger">@ViewBag.CaptchaErrorMessage</div>
             </div>
         </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -82,4 +75,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src='https://www.google.com/recaptcha/api.js?onload=myCallBack&render=explicit' async defer></script>
+    <script>
+            var recaptcha3;
+            var myCallBack = function () {
+                recaptcha3 = grecaptcha.render('recaptcha3', {
+                    'sitekey': '6LeHVh0UAAAAAOfO60erI5O-h5IL3CRzUmZNszsR',
+                    'theme': 'light'
+                });
+            }
+    </script>
 }
